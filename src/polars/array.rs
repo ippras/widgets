@@ -1,6 +1,9 @@
-use crate::r#const::{ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, STANDARD_DEVIATION};
+use crate::r#const::{
+    ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, RELATIVE_STANDARD_DEVIATION, STANDARD_DEVIATION, WIDGETS,
+};
+use const_format::formatcp;
 use egui::{Color32, Response, TextWrapMode, Ui, WidgetText};
-use egui_l20n::prelude::*;
+use egui_l10n::prelude::*;
 use itertools::Itertools;
 use polars::prelude::*;
 use polars_ext::option::DisplayOption;
@@ -15,6 +18,7 @@ pub struct Float64Array<'a> {
     row: usize,
     mean: bool,
     standard_deviation: bool,
+    relative: bool,
     #[builder(default, setter(strip_option))]
     color: Option<Color32>,
 }
@@ -27,14 +31,30 @@ impl Float64Array<'_> {
         let mean = mean_series.f64()?.get(self.row);
         let standard_deviation_series = self.series.struct_()?.field_by_name(STANDARD_DEVIATION)?;
         let standard_deviation = standard_deviation_series.f64()?.get(self.row);
+        let relative_standard_deviation_series = self
+            .series
+            .struct_()?
+            .field_by_name(RELATIVE_STANDARD_DEVIATION)?;
+        let relative_standard_deviation = relative_standard_deviation_series.f64()?.get(self.row);
         let mut text = if self.mean
+            && self.standard_deviation
+            && self.relative
+            && let Some(mean) = mean
+            && let Some(relative_standard_deviation) = relative_standard_deviation
+        {
+            WidgetText::from(format!(
+                "{mean}{NO_BREAK_SPACE}±{relative_standard_deviation}%"
+            ))
+        } else if self.mean
             && self.standard_deviation
             && let Some(mean) = mean
             && let Some(standard_deviation) = standard_deviation
         {
             WidgetText::from(format!("{mean}{NO_BREAK_SPACE}±{standard_deviation}"))
-        } else if self.mean {
-            WidgetText::from(mean.display().to_string())
+        } else if self.mean
+            && let Some(mean) = mean
+        {
+            WidgetText::from(mean.to_string())
         } else if let Some(array) = array {
             WidgetText::from(format!(
                 "[{}]",
@@ -46,27 +66,30 @@ impl Float64Array<'_> {
         } else {
             WidgetText::from(EM_DASH)
         };
+        // let mut text = if self.mean
+        //     && self.standard_deviation
+        //     && let Some(mean) = mean
+        //     && let Some(standard_deviation) = standard_deviation
+        // {
+        //     WidgetText::from(format!("{mean}{NO_BREAK_SPACE}±{standard_deviation}"))
+        // } else if self.mean {
+        //     WidgetText::from(mean.display().to_string())
+        // } else if let Some(array) = array {
+        //     WidgetText::from(format!(
+        //         "[{}]",
+        //         array
+        //             .f64()?
+        //             .iter()
+        //             .format_with(", ", |option, f| f(&option.display()))
+        //     ))
+        // } else {
+        //     WidgetText::from(EM_DASH)
+        // };
         if let Some(color) = self.color {
             text = text.color(color);
         }
         let mut response = ui.label(text);
         if response.hovered() {
-            // Mean
-            if let Some(mean) = mean {
-                response = response.on_hover_ui(|ui| {
-                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(MEAN));
-                    ui.label(mean.to_string());
-                });
-            }
-            // Standard deviation
-            if let Some(standard_deviation) = standard_deviation {
-                response = response.on_hover_ui(|ui| {
-                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(STANDARD_DEVIATION));
-                    ui.label(format!("±{standard_deviation}"));
-                });
-            }
             // Array
             if let Some(sample) = self
                 .series
@@ -78,8 +101,32 @@ impl Float64Array<'_> {
             {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(ARRAY));
+                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{ARRAY}")));
                     ui.label(format_list!(sample.iter()));
+                });
+            }
+            // Mean
+            if let Some(mean) = mean {
+                response = response.on_hover_ui(|ui| {
+                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
+                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{MEAN}")));
+                    ui.label(mean.to_string());
+                });
+            }
+            // Standard deviation
+            if let Some(standard_deviation) = standard_deviation {
+                response = response.on_hover_ui(|ui| {
+                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
+                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}")));
+                    ui.label(format!("±{standard_deviation}"));
+                });
+            }
+            // Relative standard deviation
+            if let Some(relative_standard_deviation) = relative_standard_deviation {
+                response = response.on_hover_ui(|ui| {
+                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
+                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{RELATIVE_STANDARD_DEVIATION}")));
+                    ui.label(format!("±{relative_standard_deviation}%"));
                 });
             }
         }

@@ -1,20 +1,25 @@
 [package]
 name = "widgets"
-version = "0.6.0"
+version = "0.6.1"
 authors = ["Giorgi Vladimirovich Kazakov", "Roman Alexandrovich Sidorov"]
 edition = "2024"
 
 [dependencies]
 ahash = "0.8.12"
-egui = { version = "0.34.2", default-features = false }
+const_format = "0.2.36"
+egui = { version = "0.34.3", default-features = false }
+egui-phosphor = "0.12.0"
+egui_dnd = "0.15.0"
+egui_tiles = "0.15.0"
+itertools = "0.14.0"
+ordered-float = { version = "5.3.0", features = ["serde"] }
+serde = { version = "1.0.228", features = ["derive", "std"] }
 typed-builder = "0.23.2"
 
-egui_l20n = { git = "https://github.com/kgv/egui_l20n", branch = "0.6", features = [
+egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", features = [
     "macros",
 ] }
 
-const_format = { version = "0.2.36", optional = true }
-itertools = { version = "0.14.0", optional = true }
 polars = { git = "https://github.com/pola-rs/polars", rev = "bf6a425", default-features = false, features = [
     "dtype-array",
     "dtype-struct",
@@ -26,7 +31,10 @@ polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.6", featur
     "array",
 ], optional = true }
 
-[features]
-default = ["polars"]
+fatty_acid_expressions = { git = "https://github.com/ippras/fatty_acid_expressions", optional = true }
 
-polars = ["dep:itertools", "dep:polars", "dep:polars-utils", "dep:polars_ext"]
+[features]
+default = ["fatty_acids", "polars"]
+
+fatty_acids = ["dep:fatty_acid_expressions"]
+polars = ["dep:polars", "dep:polars-utils", "dep:polars_ext"]

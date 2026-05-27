@@ -14,7 +14,26 @@ pub mod prelude {
     // }
 }
 
+pub mod l10n {
+    pub const EN: &[&str] = &[include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/ftl/en/attributes.ftl"
+    ))];
+
+    pub const RU: &[&str] = &[include_str!(concat!(
+        env!("CARGO_MANIFEST_DIR"),
+        "/ftl/ru/attributes.ftl"
+    ))];
+}
+
+pub mod buttons;
 pub mod r#const;
+pub mod settings;
+
+#[cfg(feature = "fatty_acids")]
+pub mod fatty_acids;
 
 #[cfg(feature = "polars")]
 pub mod polars;
+
+pub(crate) mod utils;
