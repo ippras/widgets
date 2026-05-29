@@ -1,62 +1,60 @@
-use crate::r#const::{ASCENDING, BY_KEY, BY_VALUE, DESCENDING, SORT};
+use crate::r#const::{ASCENDING, BY_KEY, BY_VALUE, DESCENDING, ORDER, SORT};
 use const_format::formatcp;
 use egui::{ComboBox, Ui};
 use egui_l10n::ContextExt as _;
 use fatty_acid_expressions::r#const::PREFIX;
 use serde::{Deserialize, Serialize};
 
-/// Sort and Order
+/// Sort
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
-pub struct SortAndOrder {
+pub struct Sort {
+    pub checked: bool,
+    pub by: By,
     pub order: Order,
-    pub sort: Sort,
 }
 
-impl SortAndOrder {
+impl Sort {
     pub fn new() -> Self {
         Self {
+            checked: false,
+            by: By::Value,
             order: Order::Descending,
-            sort: Sort::Value,
         }
     }
 
     pub fn show(&mut self, ui: &mut Ui) {
-        self.sort(ui);
-        self.order(ui);
-    }
-
-    /// Sort
-    fn sort(&mut self, ui: &mut Ui) {
+        // Sort
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{SORT}")));
+            ui.checkbox(&mut self.checked, ());
+            if !self.checked {
+                ui.disable();
+            }
             ComboBox::from_id_salt(SORT)
-                .selected_text(ui.localize(self.sort.text()))
+                .selected_text(ui.localize(self.by.text()))
                 .show_ui(ui, |ui| {
-                    ui.selectable_value(&mut self.sort, Sort::Key, ui.localize(Sort::Key.text()))
+                    ui.selectable_value(&mut self.by, By::Key, ui.localize(By::Key.text()))
                         .on_hover_ui(|ui| {
-                            ui.label(ui.localize(Sort::Key.hover_text()));
+                            ui.label(ui.localize(By::Key.hover_text()));
                         });
-                    ui.selectable_value(
-                        &mut self.sort,
-                        Sort::Value,
-                        ui.localize(Sort::Value.text()),
-                    )
-                    .on_hover_ui(|ui| {
-                        ui.label(ui.localize(Sort::Value.hover_text()));
-                    });
+                    ui.selectable_value(&mut self.by, By::Value, ui.localize(By::Value.text()))
+                        .on_hover_ui(|ui| {
+                            ui.label(ui.localize(By::Value.hover_text()));
+                        });
                 })
                 .response
                 .on_hover_ui(|ui| {
-                    ui.label(ui.localize(self.sort.hover_text()));
+                    ui.label(ui.localize(self.by.hover_text()));
                 });
         });
-    }
 
-    /// Order
-    fn order(&mut self, ui: &mut Ui) {
+        // Order
         ui.horizontal(|ui| {
-            ui.label(ui.localize("Order"));
-            ComboBox::from_id_salt("Order")
+            if !self.checked {
+                ui.disable();
+            }
+            ui.label(ui.localize(formatcp!("{PREFIX}_{ORDER}")));
+            ComboBox::from_id_salt(ORDER)
                 .selected_text(ui.localize(self.order.text()))
                 .show_ui(ui, |ui| {
                     ui.selectable_value(&mut self.order, Order::Ascending, Order::Ascending.text())
@@ -103,25 +101,25 @@ impl Order {
     }
 }
 
-/// Sort
+/// By
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub enum Sort {
+pub enum By {
     Key,
     Value,
 }
 
-impl Sort {
+impl By {
     const fn text(&self) -> &'static str {
         match self {
-            Sort::Key => formatcp!("{PREFIX}_{BY_KEY}"),
-            Sort::Value => formatcp!("{PREFIX}_{BY_VALUE}"),
+            By::Key => formatcp!("{PREFIX}_{BY_KEY}"),
+            By::Value => formatcp!("{PREFIX}_{BY_VALUE}"),
         }
     }
 
     const fn hover_text(&self) -> &'static str {
         match self {
-            Sort::Key => formatcp!("{PREFIX}_{BY_KEY}.hover"),
-            Sort::Value => formatcp!("{PREFIX}_{BY_VALUE}.hover"),
+            By::Key => formatcp!("{PREFIX}_{BY_KEY}.hover"),
+            By::Value => formatcp!("{PREFIX}_{BY_VALUE}.hover"),
         }
     }
 }
