@@ -1,7 +1,7 @@
 use crate::settings::Array;
 use const_format::formatcp;
 use egui::Ui;
-use egui_l10n::prelude::*;
+use egui_l10n::{ResponseExt as _, UiExt as _};
 use fatty_acid_expressions::r#const::{BIODIESEL, METABOLIC, NUTRITIONAL, PREFIX, SUM, ratio, sum};
 use serde::{Deserialize, Serialize};
 
