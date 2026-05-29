@@ -1,4 +1,4 @@
-pub use self::{array::Array, major::Major, mean::Mean, precision::Precision};
+pub use self::{array::Array, major::Major, mean::Mean, precision::Precision, sort::SortAndOrder};
 
 pub mod array;
 pub mod major;
