@@ -15,9 +15,9 @@ use serde::{Deserialize, Serialize};
 use std::iter::zip;
 use typed_builder::TypedBuilder;
 
-/// Threshold
+/// Major
 #[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
-pub struct Threshold {
+pub struct Major {
     #[builder(default, setter(skip))]
     pub auto: OrderedFloat<f64>,
     #[builder(default, setter(skip))]
@@ -35,7 +35,7 @@ pub struct Threshold {
     bookmark: Option<OrderedFloat<f64>>,
 }
 
-impl Threshold {
+impl Major {
     pub fn new() -> Self {
         Self::builder().build()
     }
