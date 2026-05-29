@@ -35,3 +35,12 @@ Widgets_StandardDeviation = Standard deviation
     .hover = Standard deviation.
 Widgets_UncheckAll = Uncheck all
     .hover = Uncheck all items in array.
+
+Widgets_ByKey = By key
+    .hover = Sort by key.
+Widgets_ByValue = By value
+    .hover = Sort by value.
+Widgets_Ascending = Ascending
+    .hover = Direct order (from min to max).
+Widgets_Descending = Descending
+    .hover = Reverse order (from max to min).
