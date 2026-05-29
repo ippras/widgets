@@ -1,7 +1,4 @@
-use crate::{
-    r#const::{PERCENT, PRECISION, SIGNIFICANT},
-    l10n,
-};
+use crate::r#const::{PERCENT, PRECISION, SIGNIFICANT};
 use egui::{Slider, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::BOOKMARK;

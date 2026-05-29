@@ -3,7 +3,6 @@ use crate::{
         AUTO_THRESHOLD, FILTER_THRESHOLD, IS_AUTO_THRESHOLD, MANUAL_THRESHOLD, OPERATOR,
         SORT_BY_MINOR_MAJOR,
     },
-    l10n,
     utils::format_list_truncated,
 };
 use egui::{ComboBox, PopupCloseBehavior, Slider, SliderClamping, Ui, Widget};

@@ -1,7 +1,4 @@
-use crate::{
-    r#const::{ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, RELATIVE, STANDARD_DEVIATION},
-    l10n,
-};
+use crate::r#const::{ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, RELATIVE, STANDARD_DEVIATION};
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::prelude::*;
 use serde::{Deserialize, Serialize};
