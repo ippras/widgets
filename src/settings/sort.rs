@@ -1,8 +1,7 @@
-use crate::r#const::{ASCENDING, BY_KEY, BY_VALUE, DESCENDING, ORDER, SORT};
+use crate::r#const::{ASCENDING, BY_KEY, BY_VALUE, DESCENDING, ORDER, PREFIX, SORT};
 use const_format::formatcp;
 use egui::{ComboBox, Ui};
 use egui_l10n::ContextExt as _;
-use fatty_acid_expressions::r#const::PREFIX;
 use serde::{Deserialize, Serialize};
 
 /// Sort
@@ -57,10 +56,14 @@ impl Sort {
             ComboBox::from_id_salt(ORDER)
                 .selected_text(ui.localize(self.order.text()))
                 .show_ui(ui, |ui| {
-                    ui.selectable_value(&mut self.order, Order::Ascending, Order::Ascending.text())
-                        .on_hover_ui(|ui| {
-                            ui.label(ui.localize(Order::Ascending.hover_text()));
-                        });
+                    ui.selectable_value(
+                        &mut self.order,
+                        Order::Ascending,
+                        ui.localize(Order::Ascending.text()),
+                    )
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(Order::Ascending.hover_text()));
+                    });
                     ui.selectable_value(
                         &mut self.order,
                         Order::Descending,
