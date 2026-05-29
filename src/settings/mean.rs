@@ -47,17 +47,17 @@ impl Mean {
                 ui.disable();
             }
             ComboBox::from_id_salt(ui.next_auto_id())
-                .selected_text(self.kind.text())
+                .selected_text(ui.localize(self.kind.text()))
                 .show_ui(ui, |ui| {
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Absolute,
-                        ui.localize(formatcp!("{PREFIX}_{}", Kind::Absolute.text())),
+                        ui.localize(Kind::Absolute.text()),
                     );
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Relative,
-                        ui.localize(formatcp!("{PREFIX}_{}", Kind::Relative.text())),
+                        ui.localize(Kind::Relative.text()),
                     );
                 });
         });
@@ -97,8 +97,8 @@ impl Kind {
 
     const fn text(&self) -> &'static str {
         match self {
-            Self::Absolute => ABSOLUTE,
-            Self::Relative => RELATIVE,
+            Self::Absolute => formatcp!("{PREFIX}_{ABSOLUTE}"),
+            Self::Relative => formatcp!("{PREFIX}_{RELATIVE}"),
         }
     }
 }
