@@ -36,6 +36,7 @@ Widgets_StandardDeviation = Standard deviation
 Widgets_UncheckAll = Uncheck all
     .hover = Uncheck all items in array.
 
+Widgets_Order = Order
 Widgets_ByKey = By key
     .hover = Sort by key.
 Widgets_ByValue = By value

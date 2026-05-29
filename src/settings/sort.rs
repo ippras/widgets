@@ -91,15 +91,15 @@ pub enum Order {
 impl Order {
     const fn text(&self) -> &'static str {
         match self {
-            Order::Ascending => formatcp!("{PREFIX}_{ASCENDING}_{BY_KEY}"),
-            Order::Descending => formatcp!("{PREFIX}_{DESCENDING}_{BY_KEY}"),
+            Order::Ascending => formatcp!("{PREFIX}_{ASCENDING}"),
+            Order::Descending => formatcp!("{PREFIX}_{DESCENDING}"),
         }
     }
 
     const fn hover_text(&self) -> &'static str {
         match self {
-            Order::Ascending => formatcp!("{PREFIX}_{ASCENDING}_{BY_KEY}.hover"),
-            Order::Descending => formatcp!("{PREFIX}_{DESCENDING}_{BY_KEY}.hover"),
+            Order::Ascending => formatcp!("{PREFIX}_{ASCENDING}.hover"),
+            Order::Descending => formatcp!("{PREFIX}_{DESCENDING}.hover"),
         }
     }
 }
