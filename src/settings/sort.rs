@@ -5,14 +5,14 @@ use egui_l10n::ContextExt as _;
 use fatty_acid_expressions::r#const::PREFIX;
 use serde::{Deserialize, Serialize};
 
-/// Sort and order
+/// Sort and Order
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
-pub struct Sort {
+pub struct SortAndOrder {
     pub order: Order,
     pub sort: Sort,
 }
 
-impl Sort {
+impl SortAndOrder {
     pub fn new() -> Self {
         Self {
             order: Order::Descending,
