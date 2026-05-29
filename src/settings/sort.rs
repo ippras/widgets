@@ -5,14 +5,14 @@ use egui_l10n::ContextExt as _;
 use fatty_acid_expressions::r#const::PREFIX;
 use serde::{Deserialize, Serialize};
 
-/// Mean and standard deviation
+/// Sort and order
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
-pub struct Mean {
-    pub(crate) order: Order,
-    pub(crate) sort: Sort,
+pub struct Sort {
+    pub order: Order,
+    pub sort: Sort,
 }
 
-impl Mean {
+impl Sort {
     pub fn new() -> Self {
         Self {
             order: Order::Descending,
@@ -82,7 +82,7 @@ impl Mean {
 
 /// Order
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub(crate) enum Order {
+pub enum Order {
     Ascending,
     Descending,
 }
@@ -105,7 +105,7 @@ impl Order {
 
 /// Sort
 #[derive(Clone, Copy, Debug, Deserialize, Eq, Hash, PartialEq, Serialize)]
-pub(crate) enum Sort {
+pub enum Sort {
     Key,
     Value,
 }
