@@ -1,9 +1,9 @@
 pub mod l10n {
-    use egui_l10n::asset;
+    use egui_l10n::ftl;
 
-    pub const EN: &[&str] = &[asset!("/ftl/en/attributes.ftl")];
+    pub const EN: &[&str] = &[ftl!("en/main.ftl")];
 
-    pub const RU: &[&str] = &[asset!("/ftl/ru/attributes.ftl")];
+    pub const RU: &[&str] = &[ftl!("ru/main.ftl")];
 }
 
 pub mod buttons;

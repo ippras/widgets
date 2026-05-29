@@ -900,7 +900,7 @@ dependencies = [
 [[package]]
 name = "egui_l10n"
 version = "0.6.1"
-source = "git+https://github.com/ippras/egui_l10n?branch=0.6#1bbf41c187566e6f61c95f310e2846677c2493fe"
+source = "git+https://github.com/ippras/egui_l10n?branch=0.6#ff3446de06f67efaef58996cb8903123221b4f8f"
 dependencies = [
  "eframe",
  "egui",
