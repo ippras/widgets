@@ -21,7 +21,8 @@ impl Widget for SettingsButton<'_> {
         } else {
             atoms.heading()
         };
-        ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{PREFIX}_{SETTINGS}"))
+        ui.toggle_value(self.selected, atoms).on_hover_ui(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{SETTINGS}")));
+        })
     }
 }

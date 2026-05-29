@@ -21,7 +21,8 @@ impl Widget for ResizableButton<'_> {
         } else {
             atoms.heading()
         };
-        ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{PREFIX}_{RESIZABLE}"))
+        ui.toggle_value(self.selected, atoms).on_hover_ui(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{RESIZABLE}")));
+        })
     }
 }

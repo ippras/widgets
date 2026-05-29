@@ -21,7 +21,9 @@ impl Widget for GridButton<'_> {
             text.heading()
         };
         ui.selectable_value(self.current_value, Some(ContainerKind::Grid), text)
-            .on_hover_localized("Grid")
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize("Grid"));
+            })
     }
 }
 
@@ -42,7 +44,9 @@ impl Widget for HorizontalButton<'_> {
             text.heading()
         };
         ui.selectable_value(self.current_value, Some(ContainerKind::Horizontal), text)
-            .on_hover_localized("Horizontal")
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize("Horizontal"));
+            })
     }
 }
 
@@ -63,7 +67,9 @@ impl Widget for TabsButton<'_> {
             text.heading()
         };
         ui.selectable_value(self.current_value, Some(ContainerKind::Tabs), text)
-            .on_hover_localized("Tabs")
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize("Tabs"));
+            })
     }
 }
 
@@ -84,6 +90,8 @@ impl Widget for VerticalButton<'_> {
             text.heading()
         };
         ui.selectable_value(self.current_value, Some(ContainerKind::Vertical), text)
-            .on_hover_localized("Vertical")
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize("Vertical"));
+            })
     }
 }

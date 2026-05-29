@@ -24,7 +24,8 @@ impl Widget for RenameButton<'_> {
         if let Some(size) = self.size {
             atoms = (atoms.0.size(size), atoms.1.size(size))
         }
-        ui.button(atoms)
-            .on_hover_localized(formatcp!("{PREFIX}_{RENAME}"))
+        ui.button(atoms).on_hover_ui(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{RENAME}")));
+        })
     }
 }

@@ -22,8 +22,14 @@ impl Widget for ReactiveButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{PREFIX}_{REACTIVE}"))
-            .on_hover_localized("Reactive.hover?State=enabled")
-            .on_disabled_hover_localized("Reactive.hover?State=disabled")
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{PREFIX}_{REACTIVE}")));
+            })
+            .on_hover_ui(|ui| {
+                ui.label(ui.localize("Reactive.hover?State=enabled"));
+            })
+            .on_disabled_hover_ui(|ui| {
+                ui.label(ui.localize("Reactive.hover?State=disabled"));
+            })
     }
 }
