@@ -89,6 +89,14 @@ pub enum Order {
 }
 
 impl Order {
+    pub fn is_descending(&self) -> bool {
+        match self {
+            Order::Ascending => false,
+            Order::Descending => true,
+        }
+    }
+}
+impl Order {
     const fn text(&self) -> &'static str {
         match self {
             Order::Ascending => formatcp!("{PREFIX}_{ASCENDING}"),
