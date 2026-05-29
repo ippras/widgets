@@ -48,12 +48,12 @@ impl Mean {
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Absolute,
-                        formatcp!("{PREFIX}_{}", Kind::Absolute.text()),
+                        ui.localize(formatcp!("{PREFIX}_{}", Kind::Absolute.text())),
                     );
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Relative,
-                        formatcp!("{PREFIX}_{}", Kind::Relative.text()),
+                        ui.localize(formatcp!("{PREFIX}_{}", Kind::Relative.text())),
                     );
                 });
         });
@@ -63,11 +63,11 @@ impl Mean {
             if !self.mean || !self.standard_deviation {
                 ui.disable();
             }
-            ui.label(ui.localize(formatcp!(
-                "{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
-            )))
-            .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}"))
-            .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}")))
+                .on_hover_localized(formatcp!(
+                    "{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
+                ))
+                .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
             Slider::new(&mut self.ddof, 0..=1)
                 .update_while_editing(false)
                 .ui(ui);
