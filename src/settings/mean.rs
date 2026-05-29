@@ -1,4 +1,7 @@
-use crate::r#const::{ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, RELATIVE, STANDARD_DEVIATION};
+use crate::r#const::{
+    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, RELATIVE, STANDARD_DEVIATION, WIDGETS,
+};
+use const_format::formatcp;
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -24,8 +27,8 @@ impl Mean {
 
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(l10n!(MEAN)))
-                .on_hover_localized(l10n!(MEAN; hover));
+            ui.label(ui.localize(formatcp!("{WIDGETS}_{MEAN}")))
+                .on_hover_localized(formatcp!("{WIDGETS}_{MEAN}.hover"));
             ui.checkbox(&mut self.mean, ());
         });
 
@@ -33,8 +36,8 @@ impl Mean {
             if !self.mean {
                 ui.disable();
             }
-            ui.label(ui.localize(l10n!(STANDARD_DEVIATION)))
-                .on_hover_localized(l10n!(STANDARD_DEVIATION; hover));
+            ui.label(ui.localize(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}")))
+                .on_hover_localized(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}.hover"));
             ui.checkbox(&mut self.standard_deviation, ());
             if !self.standard_deviation {
                 ui.disable();
@@ -45,12 +48,12 @@ impl Mean {
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Absolute,
-                        l10n!(Kind::Absolute.text()),
+                        formatcp!("{WIDGETS}_{}", Kind::Absolute.text()),
                     );
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Relative,
-                        l10n!(Kind::Relative.text()),
+                        formatcp!("{WIDGETS}_{}", Kind::Relative.text()),
                     );
                 });
         });
@@ -60,9 +63,11 @@ impl Mean {
             if !self.mean || !self.standard_deviation {
                 ui.disable();
             }
-            ui.label(ui.localize(l10n!(DELTA_DEGREES_OF_FREEDOM; abbreviation)))
-                .on_hover_localized(l10n!(DELTA_DEGREES_OF_FREEDOM))
-                .on_hover_localized(l10n!(DELTA_DEGREES_OF_FREEDOM; hover));
+            ui.label(ui.localize(formatcp!(
+                "{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
+            )))
+            .on_hover_localized(formatcp!("{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}"))
+            .on_hover_localized(formatcp!("{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
             Slider::new(&mut self.ddof, 0..=1)
                 .update_while_editing(false)
                 .ui(ui);

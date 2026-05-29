@@ -1,4 +1,5 @@
-use crate::r#const::METADATA;
+use crate::r#const::{METADATA, WIDGETS};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::TAG;
@@ -21,6 +22,6 @@ impl Widget for MetadataButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(l10n!(METADATA))
+            .on_hover_localized(formatcp!("{WIDGETS}_{METADATA}"))
     }
 }

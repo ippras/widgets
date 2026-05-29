@@ -1,6 +1,7 @@
-use crate::r#const::RESIZABLE;
+use crate::r#const::{RESIZABLE, WIDGETS};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
-use egui_l10n::{l10n, prelude::*};
+use egui_l10n::prelude::*;
 use egui_phosphor::regular::ARROWS_HORIZONTAL;
 use typed_builder::TypedBuilder;
 
@@ -21,6 +22,6 @@ impl Widget for ResizableButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(l10n!(RESIZABLE))
+            .on_hover_localized(formatcp!("{WIDGETS}_{RESIZABLE}"))
     }
 }

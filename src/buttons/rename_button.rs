@@ -1,4 +1,5 @@
-use crate::r#const::RENAME;
+use crate::r#const::{RENAME, WIDGETS};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::TEXT_AA;
@@ -23,6 +24,7 @@ impl Widget for RenameButton<'_> {
         if let Some(size) = self.size {
             atoms = (atoms.0.size(size), atoms.1.size(size))
         }
-        ui.button(atoms).on_hover_localized(l10n!(RENAME))
+        ui.button(atoms)
+            .on_hover_localized(formatcp!("{WIDGETS}_{RENAME}"))
     }
 }

@@ -1,4 +1,5 @@
-use crate::r#const::LEFT_PANEL;
+use crate::r#const::{LEFT_PANEL, WIDGETS};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::SIDEBAR_SIMPLE;
@@ -21,6 +22,6 @@ impl Widget for LeftPanelButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(l10n!(LEFT_PANEL))
+            .on_hover_localized(formatcp!("{WIDGETS}_{LEFT_PANEL}"))
     }
 }

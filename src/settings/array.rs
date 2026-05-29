@@ -1,7 +1,8 @@
 use crate::{
-    r#const::{CHECK_ALL, SORT, UNCHECK_ALL},
+    r#const::{CHECK_ALL, SORT, UNCHECK_ALL, WIDGETS},
     utils::format_list_truncated,
 };
+use const_format::formatcp;
 use egui::{ComboBox, Popup, PopupCloseBehavior, RichText, Ui};
 use egui_dnd::dnd;
 use egui_l10n::prelude::*;
@@ -33,8 +34,8 @@ impl Array {
             .id(ui.next_auto_id().with("ContextMenu"))
             .show(|ui| {
                 if ui
-                    .button((FUNNEL, ui.localize(l10n!(CHECK_ALL))))
-                    .on_hover_localized(l10n!(CHECK_ALL; hover))
+                    .button((FUNNEL, ui.localize(formatcp!("{WIDGETS}_{CHECK_ALL}"))))
+                    .on_hover_localized(formatcp!("{WIDGETS}_{CHECK_ALL}.hover"))
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -42,8 +43,8 @@ impl Array {
                     }
                 }
                 if ui
-                    .button((FUNNEL_X, ui.localize(l10n!(UNCHECK_ALL))))
-                    .on_hover_localized(l10n!(UNCHECK_ALL; hover))
+                    .button((FUNNEL_X, ui.localize(formatcp!("{WIDGETS}_{UNCHECK_ALL}"))))
+                    .on_hover_localized(formatcp!("{WIDGETS}_{UNCHECK_ALL}.hover"))
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -51,8 +52,8 @@ impl Array {
                     }
                 }
                 if ui
-                    .button((SORT_ASCENDING, ui.localize(l10n!(SORT))))
-                    .on_hover_localized(l10n!(SORT; hover))
+                    .button((SORT_ASCENDING, ui.localize(formatcp!("{WIDGETS}_{SORT}"))))
+                    .on_hover_localized(formatcp!("{WIDGETS}_{SORT}.hover"))
                     .clicked()
                 {
                     self.0.sort_by_key(|item| item.index);
