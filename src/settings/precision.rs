@@ -1,4 +1,4 @@
-use crate::r#const::{PERCENT, PRECISION, SIGNIFICANT, WIDGETS};
+use crate::r#const::{PERCENT, PRECISION, PREFIX, SIGNIFICANT};
 use const_format::formatcp;
 use egui::{Slider, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -28,15 +28,15 @@ impl Precision {
     pub fn show(&mut self, ui: &mut Ui) {
         // Percent
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{PERCENT}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{PERCENT}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{PERCENT}.hover"));
             ui.checkbox(&mut self.percent, ());
         });
 
         // Precision
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{PRECISION}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{PRECISION}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{PRECISION}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{PRECISION}.hover"));
             Slider::new(&mut self.precision, 1..=MAX_PRECISION).ui(ui);
             if ui.button((BOOKMARK, "3")).clicked() {
                 self.precision = 3;
@@ -45,8 +45,8 @@ impl Precision {
 
         // Significant
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{SIGNIFICANT}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{SIGNIFICANT}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{SIGNIFICANT}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{SIGNIFICANT}.hover"));
             ui.checkbox(&mut self.significant, ());
         });
     }

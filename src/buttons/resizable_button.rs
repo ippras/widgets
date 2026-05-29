@@ -1,4 +1,4 @@
-use crate::r#const::{RESIZABLE, WIDGETS};
+use crate::r#const::{PREFIX, RESIZABLE};
 use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -22,6 +22,6 @@ impl Widget for ResizableButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{WIDGETS}_{RESIZABLE}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{RESIZABLE}"))
     }
 }

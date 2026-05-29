@@ -1,4 +1,4 @@
-use crate::r#const::{LEFT_PANEL, WIDGETS};
+use crate::r#const::{LEFT_PANEL, PREFIX};
 use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -22,6 +22,6 @@ impl Widget for LeftPanelButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{WIDGETS}_{LEFT_PANEL}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{LEFT_PANEL}"))
     }
 }

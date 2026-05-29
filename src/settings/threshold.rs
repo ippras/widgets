@@ -1,7 +1,7 @@
 use crate::{
     r#const::{
-        AUTO_THRESHOLD, FILTER_THRESHOLD, IS_AUTO_THRESHOLD, MANUAL_THRESHOLD, OPERATOR,
-        SORT_BY_MINOR_MAJOR, WIDGETS,
+        AUTO_THRESHOLD, FILTER_THRESHOLD, IS_AUTO_THRESHOLD, MANUAL_THRESHOLD, OPERATOR, PREFIX,
+        SORT_BY_MINOR_MAJOR,
     },
     utils::format_list_truncated,
 };
@@ -52,10 +52,10 @@ impl Threshold {
     /// Auto threshold
     fn auto(&mut self, ui: &mut Ui, percent: bool) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{AUTO_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{AUTO_THRESHOLD}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{AUTO_THRESHOLD}.hover"));
             ui.checkbox(&mut self.is_auto, ())
-                .on_hover_localized(formatcp!("{WIDGETS}_{IS_AUTO_THRESHOLD}.hover"));
+                .on_hover_localized(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover"));
             if !self.is_auto {
                 ui.disable();
             }
@@ -101,8 +101,8 @@ impl Threshold {
             if self.is_auto {
                 ui.disable();
             }
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{MANUAL_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{MANUAL_THRESHOLD}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}.hover"));
             let selected_text = format_list_truncated(
                 zip(&self.manual, lipids).filter_map(|(keep, lipid)| keep.then_some(lipid)),
             );
@@ -130,8 +130,8 @@ impl Threshold {
     /// Filter thresholded
     fn filter(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{FILTER_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{FILTER_THRESHOLD}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover"));
             ui.checkbox(&mut self.filter, ());
         });
     }
@@ -140,8 +140,8 @@ impl Threshold {
     fn sort(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             // Sort by minor major
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{SORT_BY_MINOR_MAJOR}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{SORT_BY_MINOR_MAJOR}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover"));
             ui.checkbox(&mut self.sort, ());
         });
     }
@@ -149,8 +149,8 @@ impl Threshold {
     /// Operator
     fn operator(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{OPERATOR}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{OPERATOR}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{OPERATOR}.hover"));
             ComboBox::from_id_salt("Operator")
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&ui.localize(self.operator.text()))

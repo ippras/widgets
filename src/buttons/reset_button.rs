@@ -1,4 +1,4 @@
-use crate::r#const::{RESET, WIDGETS};
+use crate::r#const::{PREFIX, RESET};
 use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -22,6 +22,6 @@ impl Widget for ResetButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{WIDGETS}_{RESET}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{RESET}"))
     }
 }

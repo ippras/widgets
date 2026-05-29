@@ -1,5 +1,5 @@
 use crate::r#const::{
-    ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, RELATIVE_STANDARD_DEVIATION, STANDARD_DEVIATION, WIDGETS,
+    ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, PREFIX, RELATIVE_STANDARD_DEVIATION, STANDARD_DEVIATION,
 };
 use const_format::formatcp;
 use egui::{Color32, Response, TextWrapMode, Ui, WidgetText};
@@ -101,7 +101,7 @@ impl Float64Array<'_> {
             {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{ARRAY}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{ARRAY}")));
                     ui.label(format_list!(sample.iter()));
                 });
             }
@@ -109,7 +109,7 @@ impl Float64Array<'_> {
             if let Some(mean) = mean {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{MEAN}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{MEAN}")));
                     ui.label(mean.to_string());
                 });
             }
@@ -117,7 +117,7 @@ impl Float64Array<'_> {
             if let Some(standard_deviation) = standard_deviation {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")));
                     ui.label(format!("±{standard_deviation}"));
                 });
             }
@@ -125,7 +125,7 @@ impl Float64Array<'_> {
             if let Some(relative_standard_deviation) = relative_standard_deviation {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{RELATIVE_STANDARD_DEVIATION}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{RELATIVE_STANDARD_DEVIATION}")));
                     ui.label(format!("±{relative_standard_deviation}%"));
                 });
             }

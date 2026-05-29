@@ -1,4 +1,4 @@
-use crate::r#const::{RENAME, WIDGETS};
+use crate::r#const::{PREFIX, RENAME};
 use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -25,6 +25,6 @@ impl Widget for RenameButton<'_> {
             atoms = (atoms.0.size(size), atoms.1.size(size))
         }
         ui.button(atoms)
-            .on_hover_localized(formatcp!("{WIDGETS}_{RENAME}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{RENAME}"))
     }
 }

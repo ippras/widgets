@@ -1,6 +1,8 @@
 pub const EM_DASH: &str = "—";
 pub const NO_BREAK_SPACE: &str = " ";
 
+pub const PREFIX: &str = "Widgets";
+
 pub const ABOUT: &str = "About";
 pub const EDIT: &str = "Edit";
 pub const LEFT_PANEL: &str = "LeftPanel";
@@ -24,7 +26,6 @@ pub const SIGNIFICANT: &str = "Significant";
 pub const SORT: &str = "Sort";
 pub const STANDARD_DEVIATION: &str = "StandardDeviation";
 pub const UNCHECK_ALL: &str = "UncheckAll";
-pub const WIDGETS: &str = "Widgets";
 
 pub const IS_AUTO_THRESHOLD: &str = "IsAutoThreshold";
 pub const AUTO_THRESHOLD: &str = "AutoThreshold";

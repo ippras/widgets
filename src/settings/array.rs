@@ -1,5 +1,5 @@
 use crate::{
-    r#const::{CHECK_ALL, SORT, UNCHECK_ALL, WIDGETS},
+    r#const::{CHECK_ALL, PREFIX, SORT, UNCHECK_ALL},
     utils::format_list_truncated,
 };
 use const_format::formatcp;
@@ -34,8 +34,8 @@ impl Array {
             .id(ui.next_auto_id().with("ContextMenu"))
             .show(|ui| {
                 if ui
-                    .button((FUNNEL, ui.localize(formatcp!("{WIDGETS}_{CHECK_ALL}"))))
-                    .on_hover_localized(formatcp!("{WIDGETS}_{CHECK_ALL}.hover"))
+                    .button((FUNNEL, ui.localize(formatcp!("{PREFIX}_{CHECK_ALL}"))))
+                    .on_hover_localized(formatcp!("{PREFIX}_{CHECK_ALL}.hover"))
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -43,8 +43,8 @@ impl Array {
                     }
                 }
                 if ui
-                    .button((FUNNEL_X, ui.localize(formatcp!("{WIDGETS}_{UNCHECK_ALL}"))))
-                    .on_hover_localized(formatcp!("{WIDGETS}_{UNCHECK_ALL}.hover"))
+                    .button((FUNNEL_X, ui.localize(formatcp!("{PREFIX}_{UNCHECK_ALL}"))))
+                    .on_hover_localized(formatcp!("{PREFIX}_{UNCHECK_ALL}.hover"))
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -52,8 +52,8 @@ impl Array {
                     }
                 }
                 if ui
-                    .button((SORT_ASCENDING, ui.localize(formatcp!("{WIDGETS}_{SORT}"))))
-                    .on_hover_localized(formatcp!("{WIDGETS}_{SORT}.hover"))
+                    .button((SORT_ASCENDING, ui.localize(formatcp!("{PREFIX}_{SORT}"))))
+                    .on_hover_localized(formatcp!("{PREFIX}_{SORT}.hover"))
                     .clicked()
                 {
                     self.0.sort_by_key(|item| item.index);

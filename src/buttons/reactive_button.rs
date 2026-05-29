@@ -1,4 +1,4 @@
-use crate::r#const::{REACTIVE, WIDGETS};
+use crate::r#const::{PREFIX, REACTIVE};
 use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
@@ -22,7 +22,7 @@ impl Widget for ReactiveButton<'_> {
             atoms.heading()
         };
         ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(formatcp!("{WIDGETS}_{REACTIVE}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{REACTIVE}"))
             .on_hover_localized("Reactive.hover?State=enabled")
             .on_disabled_hover_localized("Reactive.hover?State=disabled")
     }

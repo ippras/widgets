@@ -1,5 +1,5 @@
 use crate::r#const::{
-    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, RELATIVE, STANDARD_DEVIATION, WIDGETS,
+    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, PREFIX, RELATIVE, STANDARD_DEVIATION,
 };
 use const_format::formatcp;
 use egui::{ComboBox, Slider, Ui, Widget};
@@ -27,8 +27,8 @@ impl Mean {
 
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{MEAN}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{MEAN}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{MEAN}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{MEAN}.hover"));
             ui.checkbox(&mut self.mean, ());
         });
 
@@ -36,8 +36,8 @@ impl Mean {
             if !self.mean {
                 ui.disable();
             }
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}")))
-                .on_hover_localized(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}.hover"));
+            ui.label(ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))
+                .on_hover_localized(formatcp!("{PREFIX}_{STANDARD_DEVIATION}.hover"));
             ui.checkbox(&mut self.standard_deviation, ());
             if !self.standard_deviation {
                 ui.disable();
@@ -48,12 +48,12 @@ impl Mean {
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Absolute,
-                        formatcp!("{WIDGETS}_{}", Kind::Absolute.text()),
+                        formatcp!("{PREFIX}_{}", Kind::Absolute.text()),
                     );
                     ui.selectable_value(
                         &mut self.kind,
                         Kind::Relative,
-                        formatcp!("{WIDGETS}_{}", Kind::Relative.text()),
+                        formatcp!("{PREFIX}_{}", Kind::Relative.text()),
                     );
                 });
         });
@@ -64,10 +64,10 @@ impl Mean {
                 ui.disable();
             }
             ui.label(ui.localize(formatcp!(
-                "{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
+                "{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
             )))
-            .on_hover_localized(formatcp!("{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}"))
-            .on_hover_localized(formatcp!("{WIDGETS}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
+            .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}"))
+            .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
             Slider::new(&mut self.ddof, 0..=1)
                 .update_while_editing(false)
                 .ui(ui);
