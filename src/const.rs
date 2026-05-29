@@ -3,6 +3,12 @@ pub const NO_BREAK_SPACE: &str = " ";
 
 pub const PREFIX: &str = "Widgets";
 
+pub const ORDER: &str = "Order";
+pub const ASCENDING: &str = "Ascending";
+pub const DESCENDING: &str = "Descending";
+pub const BY_KEY: &str = "ByKey";
+pub const BY_VALUE: &str = "ByValue";
+
 pub const ABOUT: &str = "About";
 pub const EDIT: &str = "Edit";
 pub const LEFT_PANEL: &str = "LeftPanel";

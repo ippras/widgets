@@ -53,9 +53,12 @@ impl Major {
     fn auto(&mut self, ui: &mut Ui, percent: bool) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{AUTO_THRESHOLD}.hover"));
-            ui.checkbox(&mut self.is_auto, ())
-                .on_hover_localized(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}.hover")));
+                });
+            ui.checkbox(&mut self.is_auto, ()).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
+            });
             if !self.is_auto {
                 ui.disable();
             }
@@ -102,7 +105,9 @@ impl Major {
                 ui.disable();
             }
             ui.label(ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}.hover")));
+                });
             let selected_text = format_list_truncated(
                 zip(&self.manual, lipids).filter_map(|(keep, lipid)| keep.then_some(lipid)),
             );
@@ -131,7 +136,9 @@ impl Major {
     fn filter(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover")));
+                });
             ui.checkbox(&mut self.filter, ());
         });
     }
@@ -141,7 +148,9 @@ impl Major {
         ui.horizontal(|ui| {
             // Sort by minor major
             ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover")));
+                });
             ui.checkbox(&mut self.sort, ());
         });
     }
@@ -150,7 +159,9 @@ impl Major {
     fn operator(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{OPERATOR}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}.hover")));
+                });
             ComboBox::from_id_salt("Operator")
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&ui.localize(self.operator.text()))
@@ -166,7 +177,9 @@ impl Major {
                             selected_value,
                             ui.localize(selected_value.text()),
                         )
-                        .on_hover_localized(self.operator.hover_text());
+                        .on_hover_ui(|ui| {
+                            ui.label(ui.localize(self.operator.hover_text()));
+                        });
                     }
                 })
                 .response

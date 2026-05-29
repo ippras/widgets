@@ -4,3 +4,4 @@ pub mod array;
 pub mod major;
 pub mod mean;
 pub mod precision;
+pub mod sort;

@@ -28,7 +28,9 @@ impl Mean {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{MEAN}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{MEAN}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{MEAN}.hover")));
+                });
             ui.checkbox(&mut self.mean, ());
         });
 
@@ -37,7 +39,9 @@ impl Mean {
                 ui.disable();
             }
             ui.label(ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{STANDARD_DEVIATION}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}.hover")));
+                });
             ui.checkbox(&mut self.standard_deviation, ());
             if !self.standard_deviation {
                 ui.disable();
@@ -64,10 +68,14 @@ impl Mean {
                 ui.disable();
             }
             ui.label(ui.localize(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}")))
-                .on_hover_localized(formatcp!(
-                    "{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
-                ))
-                .on_hover_localized(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!(
+                        "{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.abbreviation"
+                    )));
+                })
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}.hover")));
+                });
             Slider::new(&mut self.ddof, 0..=1)
                 .update_while_editing(false)
                 .ui(ui);

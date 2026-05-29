@@ -1,7 +1,7 @@
 use crate::settings::Array;
 use const_format::formatcp;
 use egui::Ui;
-use egui_l10n::{ResponseExt as _, UiExt as _};
+use egui_l10n::UiExt as _;
 use fatty_acid_expressions::r#const::{BIODIESEL, METABOLIC, NUTRITIONAL, PREFIX, SUM, ratio, sum};
 use serde::{Deserialize, Serialize};
 
@@ -25,7 +25,9 @@ impl Expressions {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{SUM}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{SUM}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{SUM}.hover")));
+                });
             self.sum.show(ui);
         });
         self.ratio.show(ui);
@@ -54,17 +56,23 @@ impl Ratio {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{BIODIESEL}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{BIODIESEL}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{BIODIESEL}.hover")));
+                });
             self.biodiesel.show(ui);
         });
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{METABOLIC}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{METABOLIC}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{METABOLIC}.hover")));
+                });
             self.metabolic.show(ui);
         });
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{NUTRITIONAL}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{NUTRITIONAL}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{NUTRITIONAL}.hover")));
+                });
             self.nutritional.show(ui);
         });
     }

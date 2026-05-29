@@ -5,7 +5,7 @@ use crate::{
 use const_format::formatcp;
 use egui::{ComboBox, Popup, PopupCloseBehavior, RichText, Ui};
 use egui_dnd::dnd;
-use egui_l10n::prelude::*;
+use egui_l10n::prelude::ContextExt;
 use egui_phosphor::regular::{DOTS_SIX_VERTICAL, FUNNEL, FUNNEL_X, SORT_ASCENDING};
 use serde::{Deserialize, Serialize};
 use std::slice::Iter;
@@ -35,7 +35,9 @@ impl Array {
             .show(|ui| {
                 if ui
                     .button((FUNNEL, ui.localize(formatcp!("{PREFIX}_{CHECK_ALL}"))))
-                    .on_hover_localized(formatcp!("{PREFIX}_{CHECK_ALL}.hover"))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(formatcp!("{PREFIX}_{CHECK_ALL}.hover")));
+                    })
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -44,7 +46,9 @@ impl Array {
                 }
                 if ui
                     .button((FUNNEL_X, ui.localize(formatcp!("{PREFIX}_{UNCHECK_ALL}"))))
-                    .on_hover_localized(formatcp!("{PREFIX}_{UNCHECK_ALL}.hover"))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(formatcp!("{PREFIX}_{UNCHECK_ALL}.hover")));
+                    })
                     .clicked()
                 {
                     for item in &mut self.0 {
@@ -53,7 +57,9 @@ impl Array {
                 }
                 if ui
                     .button((SORT_ASCENDING, ui.localize(formatcp!("{PREFIX}_{SORT}"))))
-                    .on_hover_localized(formatcp!("{PREFIX}_{SORT}.hover"))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(formatcp!("{PREFIX}_{SORT}.hover")));
+                    })
                     .clicked()
                 {
                     self.0.sort_by_key(|item| item.index);

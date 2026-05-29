@@ -29,14 +29,18 @@ impl Precision {
         // Percent
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{PERCENT}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}.hover")));
+                });
             ui.checkbox(&mut self.percent, ());
         });
 
         // Precision
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{PRECISION}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{PRECISION}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{PRECISION}.hover")));
+                });
             Slider::new(&mut self.precision, 1..=MAX_PRECISION).ui(ui);
             if ui.button((BOOKMARK, "3")).clicked() {
                 self.precision = 3;
@@ -46,7 +50,9 @@ impl Precision {
         // Significant
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{SIGNIFICANT}")))
-                .on_hover_localized(formatcp!("{PREFIX}_{SIGNIFICANT}.hover"));
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{SIGNIFICANT}.hover")));
+                });
             ui.checkbox(&mut self.significant, ());
         });
     }
