@@ -1,29 +1,15 @@
-pub mod prelude {
-    // pub use crate::{data_frame::DataFrameExt, expr::ExprExt, option::DisplayOption};
+use egui::Ui;
 
-    // #[cfg(feature = "array")]
-    // pub use crate::expr::array::{eval_arr, Array};
-
-    // #[cfg(feature = "temporal_conversions")]
-    // pub use polars_arrow::temporal_conversions::{
-    //     timestamp_ms_to_datetime, timestamp_ns_to_datetime, timestamp_us_to_datetime,
-    // };
-
-    // pub mod r#const {
-    //     pub use crate::r#const::{ARRAY, EM_DASH, MEAN, STANDARD_DEVIATION};
-    // }
+pub trait Show {
+    fn show(&mut self, ui: &mut Ui);
 }
 
 pub mod l10n {
-    pub const EN: &[&str] = &[include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/ftl/en/attributes.ftl"
-    ))];
+    use egui_l10n::ftl;
 
-    pub const RU: &[&str] = &[include_str!(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/ftl/ru/attributes.ftl"
-    ))];
+    pub const EN: &[&str] = &[ftl!("en/main.ftl")];
+
+    pub const RU: &[&str] = &[ftl!("ru/main.ftl")];
 }
 
 pub mod buttons;

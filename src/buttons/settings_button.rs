@@ -1,4 +1,5 @@
-use crate::r#const::SETTINGS;
+use crate::r#const::{PREFIX, SETTINGS};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::SLIDERS_HORIZONTAL;
@@ -20,7 +21,8 @@ impl Widget for SettingsButton<'_> {
         } else {
             atoms.heading()
         };
-        ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(l10n!(SETTINGS))
+        ui.toggle_value(self.selected, atoms).on_hover_ui(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{SETTINGS}")));
+        })
     }
 }

@@ -1,9 +1,13 @@
-use crate::r#const::{
-    ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, RELATIVE_STANDARD_DEVIATION, STANDARD_DEVIATION, WIDGETS,
+use crate::{
+    r#const::{
+        ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, PREFIX, RELATIVE_STANDARD_DEVIATION,
+        STANDARD_DEVIATION,
+    },
+    settings::MeanAndStandardDeviation,
 };
 use const_format::formatcp;
 use egui::{Color32, Response, TextWrapMode, Ui, WidgetText};
-use egui_l10n::prelude::*;
+use egui_l10n::ContextExt as _;
 use itertools::Itertools;
 use polars::prelude::*;
 use polars_ext::option::DisplayOption;
@@ -23,6 +27,17 @@ pub struct Float64Array<'a> {
     color: Option<Color32>,
 }
 
+impl<'a, T1, T2, T6> Float64ArrayBuilder<'a, (T1, T2, (), (), (), T6)> {
+    pub fn mean_and_standard_deviation(
+        self,
+        mean_and_standard_deviation: MeanAndStandardDeviation,
+    ) -> Float64ArrayBuilder<'a, (T1, T2, (bool,), (bool,), (bool,), T6)> {
+        self.mean(mean_and_standard_deviation.mean)
+            .standard_deviation(mean_and_standard_deviation.standard_deviation)
+            .relative(mean_and_standard_deviation.kind.is_relative())
+    }
+}
+
 impl Float64Array<'_> {
     pub fn show(&self, ui: &mut Ui) -> PolarsResult<Response> {
         let array_series = self.series.struct_()?.field_by_name(ARRAY)?;
@@ -39,22 +54,22 @@ impl Float64Array<'_> {
         let mut text = if self.mean
             && self.standard_deviation
             && self.relative
-            && let Some(mean) = mean
             && let Some(relative_standard_deviation) = relative_standard_deviation
         {
             WidgetText::from(format!(
-                "{mean}{NO_BREAK_SPACE}±{relative_standard_deviation}%"
+                "{}{NO_BREAK_SPACE}±{relative_standard_deviation}%",
+                mean.display()
             ))
         } else if self.mean
             && self.standard_deviation
-            && let Some(mean) = mean
             && let Some(standard_deviation) = standard_deviation
         {
-            WidgetText::from(format!("{mean}{NO_BREAK_SPACE}±{standard_deviation}"))
-        } else if self.mean
-            && let Some(mean) = mean
-        {
-            WidgetText::from(mean.to_string())
+            WidgetText::from(format!(
+                "{}{NO_BREAK_SPACE}±{standard_deviation}",
+                mean.display()
+            ))
+        } else if self.mean {
+            WidgetText::from(mean.display().to_string())
         } else if let Some(array) = array {
             WidgetText::from(format!(
                 "[{}]",
@@ -101,7 +116,7 @@ impl Float64Array<'_> {
             {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{ARRAY}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{ARRAY}")));
                     ui.label(format_list!(sample.iter()));
                 });
             }
@@ -109,7 +124,7 @@ impl Float64Array<'_> {
             if let Some(mean) = mean {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{MEAN}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{MEAN}")));
                     ui.label(mean.to_string());
                 });
             }
@@ -117,7 +132,7 @@ impl Float64Array<'_> {
             if let Some(standard_deviation) = standard_deviation {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{STANDARD_DEVIATION}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")));
                     ui.label(format!("±{standard_deviation}"));
                 });
             }
@@ -125,7 +140,7 @@ impl Float64Array<'_> {
             if let Some(relative_standard_deviation) = relative_standard_deviation {
                 response = response.on_hover_ui(|ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    ui.heading(ui.localize(formatcp!("{WIDGETS}_{RELATIVE_STANDARD_DEVIATION}")));
+                    ui.heading(ui.localize(formatcp!("{PREFIX}_{RELATIVE_STANDARD_DEVIATION}")));
                     ui.label(format!("±{relative_standard_deviation}%"));
                 });
             }

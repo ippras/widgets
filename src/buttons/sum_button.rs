@@ -24,7 +24,9 @@ impl Widget for SumButton<'_> {
         };
         let mut response = ui.toggle_value(self.selected, atoms);
         if let Some(hover) = self.hover {
-            response = response.on_hover_localized(hover)
+            response = response.on_hover_ui(|ui| {
+                ui.label(ui.localize(hover));
+            })
         }
         response
     }

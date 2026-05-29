@@ -1,4 +1,5 @@
-use crate::r#const::RESET;
+use crate::r#const::{PREFIX, RESET};
+use const_format::formatcp;
 use egui::{Response, RichText, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::ARROWS_CLOCKWISE;
@@ -20,7 +21,8 @@ impl Widget for ResetButton<'_> {
         } else {
             atoms.heading()
         };
-        ui.toggle_value(self.selected, atoms)
-            .on_hover_localized(l10n!(RESET))
+        ui.toggle_value(self.selected, atoms).on_hover_ui(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{RESET}")));
+        })
     }
 }

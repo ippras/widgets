@@ -26,7 +26,9 @@ impl Widget for SaveButton<'_> {
         };
         let mut response = ui.button(atoms);
         if let Some(hover) = self.hover {
-            response = response.on_hover_localized(hover)
+            response = response.on_hover_ui(|ui| {
+                ui.label(ui.localize(hover));
+            })
         }
         response
     }
@@ -50,6 +52,6 @@ impl Widget for SaveButton<'_> {
 //         };
 //         ui.menu_button(atoms, self.add_contents)
 //             .response
-//             .on_hover_localized("Save")
+//             .on_hover_ui(|ui| { ui.label(ui.localize("Save")); })
 //     }
 // }

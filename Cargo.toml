@@ -1,6 +1,6 @@
 [package]
 name = "widgets"
-version = "0.6.1"
+version = "0.6.2"
 authors = ["Giorgi Vladimirovich Kazakov", "Roman Alexandrovich Sidorov"]
 edition = "2024"
 
@@ -20,14 +20,14 @@ egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", featu
     "macros",
 ] }
 
-polars = { git = "https://github.com/pola-rs/polars", rev = "bf6a425", default-features = false, features = [
+polars = { version = "0.52.0", default-features = false, features = [
     "dtype-array",
     "dtype-struct",
     "fmt_no_tty",
     "lazy",
 ], optional = true }
-polars-utils = { version = "0.53.0", features = ["nightly"], optional = true }
-polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.6", features = [
+polars-utils = { version = "0.52.0", features = ["nightly"], optional = true }
+polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", features = [
     "array",
 ], optional = true }
 
