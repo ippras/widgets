@@ -36,6 +36,10 @@ Widgets_StandardDeviation = Standard deviation
 Widgets_UncheckAll = Uncheck all
     .hover = Uncheck all items in array.
 
+Widgets_Relative = Relative
+    .hover = Relative standard deviation.
+Widgets_Absolute = Absolute
+    .hover = Absolute standard deviation.
 Widgets_Order = Order
 Widgets_ByKey = By key
     .hover = Sort by key.
