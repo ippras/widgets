@@ -1,5 +1,6 @@
 use crate::r#const::{
-    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, PREFIX, RELATIVE, STANDARD_DEVIATION,
+    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, PREFIX, RELATIVE, RELATIVE_STANDARD_DEVIATION,
+    STANDARD_DEVIATION,
 };
 use const_format::formatcp;
 use egui::{ComboBox, Slider, Ui, Widget};
@@ -98,7 +99,7 @@ impl Kind {
     const fn text(&self) -> &'static str {
         match self {
             Self::Absolute => formatcp!("{PREFIX}_{ABSOLUTE}"),
-            Self::Relative => formatcp!("{PREFIX}_{RELATIVE}"),
+            Self::Relative => formatcp!("{PREFIX}_{RELATIVE_STANDARD_DEVIATION}.short"),
         }
     }
 }

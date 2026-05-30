@@ -23,6 +23,7 @@ Widgets_Precision = Precision
     .hover = Precision.
 Widgets_RelativeStandardDeviation = Relative standard deviation
     .abbreviation = RSD
+    .short = Relative
     .hover = Relative standard deviation.
 Widgets_Significant = Significant
     .hover = Significant.
