@@ -5,3 +5,4 @@ pub mod major;
 pub mod mean;
 pub mod precision;
 pub mod sort;
+pub mod zero;
