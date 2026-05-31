@@ -9,13 +9,13 @@ use serde::{Deserialize, Serialize};
 
 /// Highlight, sort, filter
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
-pub struct Hsf {
+pub struct HighlightSortFilter {
     pub highlight: bool,
     pub sort: bool,
     pub filter: bool,
 }
 
-impl Hsf {
+impl HighlightSortFilter {
     pub fn new() -> Self {
         Self {
             highlight: false,
@@ -25,7 +25,7 @@ impl Hsf {
     }
 }
 
-impl Show for Hsf {
+impl Show for HighlightSortFilter {
     fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{WIDGETS}_{HIGHLIGHT}")))
