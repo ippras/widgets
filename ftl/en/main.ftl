@@ -53,3 +53,5 @@ Widgets_Descending = Descending
 
 Widgets_Zero = Zero
     .hover = Highlight values equal to zero.
+Widgets_Filter = Filter
+    .hover = Filter values equal to zero.
