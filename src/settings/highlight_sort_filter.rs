@@ -50,3 +50,9 @@ impl Show for HighlightSortFilter {
         });
     }
 }
+
+impl Default for HighlightSortFilter {
+    fn default() -> Self {
+        Self::new()
+    }
+}

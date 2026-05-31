@@ -1,8 +1,10 @@
 use crate::{
+    Show,
     r#const::{
         AUTO_THRESHOLD, FILTER_THRESHOLD, IS_AUTO_THRESHOLD, MANUAL_THRESHOLD, OPERATOR, PREFIX,
         SORT_BY_MINOR_MAJOR,
     },
+    settings::HighlightSortFilter,
     utils::format_list_truncated,
 };
 use const_format::formatcp;
@@ -20,16 +22,14 @@ use typed_builder::TypedBuilder;
 pub struct Major {
     #[builder(default, setter(skip))]
     pub auto: OrderedFloat<f64>,
-    #[builder(default, setter(skip))]
-    pub filter: bool,
     #[builder(default = true, setter(skip))]
     pub is_auto: bool,
     #[builder(default, setter(skip))]
     pub manual: Vec<bool>,
-    #[builder(default = Operator::Max, setter(skip))]
-    pub operator: Operator,
+    // #[builder(default = Operator::Max, setter(skip))]
+    // pub operator: Operator,
     #[builder(default, setter(skip))]
-    pub sort: bool,
+    pub highlight_sort_filter: HighlightSortFilter,
 
     #[builder(default, setter(into, strip_option))]
     bookmark: Option<OrderedFloat<f64>>,
@@ -43,10 +43,8 @@ impl Major {
     pub fn show(&mut self, ui: &mut Ui, lipids: &[String], percent: bool) {
         self.auto(ui, percent);
         self.manual(ui, lipids);
-        self.sort(ui);
-        self.filter(ui);
-
-        self.operator(ui);
+        ui.separator();
+        self.highlight_sort_filter.show(ui);
     }
 
     /// Auto threshold
@@ -132,62 +130,62 @@ impl Major {
         });
     }
 
-    /// Filter thresholded
-    fn filter(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover")));
-                });
-            ui.checkbox(&mut self.filter, ());
-        });
-    }
+    // /// Filter thresholded
+    // fn filter(&mut self, ui: &mut Ui) {
+    //     ui.horizontal(|ui| {
+    //         ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}")))
+    //             .on_hover_ui(|ui| {
+    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover")));
+    //             });
+    //         ui.checkbox(&mut self.filter, ());
+    //     });
+    // }
 
-    /// Sort thresholded
-    fn sort(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            // Sort by minor major
-            ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover")));
-                });
-            ui.checkbox(&mut self.sort, ());
-        });
-    }
+    // /// Sort thresholded
+    // fn sort(&mut self, ui: &mut Ui) {
+    //     ui.horizontal(|ui| {
+    //         // Sort by minor major
+    //         ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}")))
+    //             .on_hover_ui(|ui| {
+    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover")));
+    //             });
+    //         ui.checkbox(&mut self.sort, ());
+    //     });
+    // }
 
-    /// Operator
-    fn operator(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}.hover")));
-                });
-            ComboBox::from_id_salt("Operator")
-                .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
-                .selected_text(&ui.localize(self.operator.text()))
-                .show_ui(ui, |ui| {
-                    for selected_value in [
-                        Operator::Max,
-                        Operator::Min,
-                        Operator::Mean,
-                        Operator::Median,
-                    ] {
-                        ui.selectable_value(
-                            &mut self.operator,
-                            selected_value,
-                            ui.localize(selected_value.text()),
-                        )
-                        .on_hover_ui(|ui| {
-                            ui.label(ui.localize(self.operator.hover_text()));
-                        });
-                    }
-                })
-                .response
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(self.operator.hover_text()));
-                });
-        });
-    }
+    // /// Operator
+    // fn operator(&mut self, ui: &mut Ui) {
+    //     ui.horizontal(|ui| {
+    //         ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}")))
+    //             .on_hover_ui(|ui| {
+    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}.hover")));
+    //             });
+    //         ComboBox::from_id_salt("Operator")
+    //             .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
+    //             .selected_text(&ui.localize(self.operator.text()))
+    //             .show_ui(ui, |ui| {
+    //                 for selected_value in [
+    //                     Operator::Max,
+    //                     Operator::Min,
+    //                     Operator::Mean,
+    //                     Operator::Median,
+    //                 ] {
+    //                     ui.selectable_value(
+    //                         &mut self.operator,
+    //                         selected_value,
+    //                         ui.localize(selected_value.text()),
+    //                     )
+    //                     .on_hover_ui(|ui| {
+    //                         ui.label(ui.localize(self.operator.hover_text()));
+    //                     });
+    //                 }
+    //             })
+    //             .response
+    //             .on_hover_ui(|ui| {
+    //                 ui.label(ui.localize(self.operator.hover_text()));
+    //             });
+    //     });
+    // }
 }
 
 /// Operator
