@@ -11,4 +11,15 @@ pub struct Settings {
     pub expressions: Expressions,
 }
 
+impl Settings {
+    pub fn new() -> Self {
+        Self {
+            threshold: false,
+            sort: false,
+            filter: false,
+            expressions: Expressions::new(),
+        }
+    }
+}
+
 pub mod expressions;
