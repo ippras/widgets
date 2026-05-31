@@ -1,36 +1,33 @@
-use crate::r#const::{FILTER, PREFIX as WIDGETS, SORT, ZERO};
+use crate::{
+    Show,
+    r#const::{FILTER, PREFIX as WIDGETS, SORT, THRESHOLD},
+};
 use const_format::formatcp;
 use egui::Ui;
 use egui_l10n::UiExt;
 use serde::{Deserialize, Serialize};
 
-/// Zero
+/// Threshold
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
-pub struct Zero {
-    pub checked: bool,
+pub struct Threshold<T: Show> {
+    pub threshold: T,
     pub sort: bool,
     pub filter: bool,
 }
 
-impl Zero {
+impl Threshold<bool> {
     pub fn new() -> Self {
         Self {
-            checked: false,
+            threshold: false,
             sort: false,
             filter: false,
         }
     }
 }
 
-impl Zero {
-    pub fn show(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{ZERO}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{WIDGETS}_{ZERO}.hover")));
-                });
-            ui.checkbox(&mut self.checked, ());
-        });
+impl<T: Show> Show for Threshold<T> {
+    fn show(&mut self, ui: &mut Ui) {
+        self.threshold.show(ui);
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{WIDGETS}_{SORT}")))
                 .on_hover_ui(|ui| {
@@ -44,6 +41,18 @@ impl Zero {
                     ui.label(ui.localize(formatcp!("{WIDGETS}_{FILTER}.hover")));
                 });
             ui.checkbox(&mut self.filter, ());
+        });
+    }
+}
+
+impl Show for bool {
+    fn show(&mut self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            ui.label(ui.localize(formatcp!("{WIDGETS}_{THRESHOLD}")))
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{WIDGETS}_{THRESHOLD}.hover")));
+                });
+            ui.checkbox(self, ());
         });
     }
 }

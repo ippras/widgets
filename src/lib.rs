@@ -1,3 +1,9 @@
+use egui::Ui;
+
+pub trait Show {
+    fn show(&mut self, ui: &mut Ui);
+}
+
 pub mod l10n {
     use egui_l10n::ftl;
 

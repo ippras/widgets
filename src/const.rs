@@ -4,6 +4,7 @@ pub const NO_BREAK_SPACE: &str = " ";
 pub const PREFIX: &str = "Widgets";
 
 // pub const SORT: &str = "Sort";
+pub const THRESHOLD: &str = "Threshold";
 pub const ZERO: &str = "Zero";
 pub const FILTER: &str = "Filter";
 
