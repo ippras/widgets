@@ -3,6 +3,10 @@ pub const NO_BREAK_SPACE: &str = " ";
 
 pub const PREFIX: &str = "Widgets";
 
+// pub const SORT: &str = "Sort";
+pub const ZERO: &str = "Zero";
+pub const FILTER: &str = "Filter";
+
 pub const ORDER: &str = "Order";
 pub const ASCENDING: &str = "Ascending";
 pub const DESCENDING: &str = "Descending";

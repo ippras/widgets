@@ -50,3 +50,6 @@ Widgets_Ascending = Ascending
     .hover = Direct order (from min to max).
 Widgets_Descending = Descending
     .hover = Reverse order (from max to min).
+
+Widgets_Zero = Zero
+    .hover = Highlight values equal to zero.
