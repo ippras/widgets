@@ -12,6 +12,7 @@ use egui::{ComboBox, PopupCloseBehavior, Slider, SliderClamping, Ui, Widget};
 use egui_l10n::prelude::*;
 use egui_phosphor::regular::BOOKMARK;
 use ordered_float::OrderedFloat;
+use polars::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::iter::zip;
 use typed_builder::TypedBuilder;
@@ -65,8 +66,7 @@ impl Major {
                     if percent {
                         value *= 100.0;
                     }
-                    // AnyValue::Float64(value).to_string()
-                    value.to_string()
+                    AnyValue::Float64(value).to_string()
                 })
                 .custom_parser(|value| {
                     let mut parsed = value.parse().ok()?;
