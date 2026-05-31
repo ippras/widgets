@@ -5,7 +5,7 @@ use egui_l10n::UiExt;
 use serde::{Deserialize, Serialize};
 
 /// Zero
-#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
 pub struct Zero {
     pub zero: bool,
     pub sort: bool,
