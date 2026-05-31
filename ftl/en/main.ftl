@@ -51,7 +51,9 @@ Widgets_Ascending = Ascending
 Widgets_Descending = Descending
     .hover = Reverse order (from max to min).
 
-Widgets_Zero = Zero
-    .hover = Highlight values equal to zero.
+Widgets_ThresholdZero = Threshold zero
+    .hover = Threshold values equal to zero.
+Widgets_Highlight = Highlight
+    .hover = Highlight values that are less than the threshold.
 Widgets_Filter = Filter
-    .hover = Filter values equal to zero.
+    .hover = Filter values that are less than the threshold.
