@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 /// Zero
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
 pub struct Zero {
-    pub zero: bool,
+    pub checked: bool,
     pub sort: bool,
     pub filter: bool,
 }
@@ -15,7 +15,7 @@ pub struct Zero {
 impl Zero {
     pub fn new() -> Self {
         Self {
-            zero: false,
+            checked: false,
             sort: false,
             filter: false,
         }
@@ -29,7 +29,7 @@ impl Zero {
                 .on_hover_ui(|ui| {
                     ui.label(ui.localize(formatcp!("{WIDGETS}_{ZERO}.hover")));
                 });
-            ui.checkbox(&mut self.zero, ());
+            ui.checkbox(&mut self.checked, ());
         });
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{WIDGETS}_{SORT}")))
