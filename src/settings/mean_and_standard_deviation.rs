@@ -11,10 +11,9 @@ use serde::{Deserialize, Serialize};
 
 /// Mean and standard deviation
 #[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = ui.localize(formatcp!("{PREFIX}_{MEAN}")))]
 pub struct _MeanAndStandardDeviation {
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
-    pub standard_deviation: Option<StandardDeviation>,
+    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{MEAN}")))]
+    pub mean: Option<Mean>,
 }
 
 /// Mean
