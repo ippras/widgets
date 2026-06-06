@@ -18,7 +18,7 @@ pub struct _MeanAndStandardDeviation {
 
 /// Mean
 #[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = ui.localize(formatcp!("{PREFIX}_{MEAN}")))]
+#[egui_probe(name = "")]
 pub struct Mean {
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
     pub standard_deviation: Option<StandardDeviation>,
@@ -26,7 +26,7 @@ pub struct Mean {
 
 /// Standard deviation
 #[derive(Clone, Copy, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
+#[egui_probe(name = "")]
 pub struct StandardDeviation {
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{KIND}")))]
     pub kind: Kind,
