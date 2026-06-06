@@ -839,6 +839,7 @@ dependencies = [
 [[package]]
 name = "egui-probe"
 version = "0.11.0"
+source = "git+https://github.com/kgv/egui-probe#bf11547096d24edb0ccc9a74532eff5e43bb9557"
 dependencies = [
  "egui",
  "egui-probe-proc",
@@ -847,6 +848,7 @@ dependencies = [
 [[package]]
 name = "egui-probe-proc"
 version = "0.11.0"
+source = "git+https://github.com/kgv/egui-probe#bf11547096d24edb0ccc9a74532eff5e43bb9557"
 dependencies = [
  "convert_case",
  "proc-easy",

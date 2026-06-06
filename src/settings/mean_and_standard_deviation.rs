@@ -17,6 +17,18 @@ pub struct Mean {
     pub standard_deviation: Option<StandardDeviation>,
 }
 
+#[cfg(test)]
+mod test {
+    use super::*;
+    use egui_probe::Probe;
+
+    #[test]
+    fn test() {
+        let mut mean = Mean::default();
+        Probe::new(&mut mean).show(ui);
+    }
+}
+
 /// Standard deviation
 #[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
 #[egui_probe(name = ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]

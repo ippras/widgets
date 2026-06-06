@@ -24,8 +24,9 @@ serde = { version = "1.0.228", features = ["derive", "std"] }
 typed-builder = "0.23.2"
 
 display_option = { git = "https://github.com/kgv/display_option" }
-# egui-probe = { git = "https://github.com/kgv/egui-probe", features = [
-egui-probe = { path = "D:/git/kgv/egui-probe", features = ["derive"] }
+egui-probe = { git = "https://github.com/kgv/egui-probe", features = [
+    "derive",
+] }
 egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", features = [
     "macros",
 ] }
