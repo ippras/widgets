@@ -1,11 +1,29 @@
 use crate::r#const::{
-    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, MEAN, PREFIX, RELATIVE, RELATIVE_STANDARD_DEVIATION,
+    ABSOLUTE, DELTA_DEGREES_OF_FREEDOM, KIND, MEAN, PREFIX, RELATIVE, RELATIVE_STANDARD_DEVIATION,
     STANDARD_DEVIATION,
 };
 use const_format::formatcp;
+use display_option::DisplayOption;
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
+use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
+
+/// Mean and standard deviation
+#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+pub struct Mean {
+    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
+    pub standard_deviation: Option<StandardDeviation>,
+}
+
+/// Standard deviation
+#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+pub struct StandardDeviation {
+    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{KIND}")))]
+    pub kind: Option<Kind>,
+    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}")), range = 0..=1)]
+    pub ddof: u8,
+}
 
 /// Mean and standard deviation
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
@@ -85,8 +103,10 @@ impl MeanAndStandardDeviation {
 }
 
 /// Standard deviation kind
-#[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+#[egui_probe(tags combobox)]
 pub enum Kind {
+    #[default]
     Absolute,
     Relative,
 }
@@ -96,7 +116,7 @@ impl Kind {
         *self == Self::Relative
     }
 
-    const fn text(&self) -> &'static str {
+    const fn text(self) -> &'static str {
         match self {
             Self::Absolute => formatcp!("{PREFIX}_{ABSOLUTE}"),
             Self::Relative => formatcp!("{PREFIX}_{RELATIVE_STANDARD_DEVIATION}.short"),

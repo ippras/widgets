@@ -28,6 +28,7 @@ pub const FILTER_THRESHOLD: &str = "FilterThreshold";
 pub const FILTER: &str = "Filter";
 pub const HIGHLIGHT: &str = "Highlight";
 pub const IS_AUTO_THRESHOLD: &str = "IsAutoThreshold";
+pub const KIND: &str = "Kind";
 pub const LEFT_PANEL: &str = "LeftPanel";
 pub const MANUAL_THRESHOLD: &str = "ManualThreshold";
 pub const MEAN: &str = "Mean";

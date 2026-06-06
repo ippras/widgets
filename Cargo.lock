@@ -716,6 +716,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "display_option"
+version = "0.0.1"
+source = "git+https://github.com/kgv/display_option#d9cf5453a91364ed34e3d6047eed4c1deb1c6efc"
+
+[[package]]
 name = "displaydoc"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4818,6 +4823,7 @@ version = "0.6.2"
 dependencies = [
  "ahash",
  "const_format",
+ "display_option",
  "egui",
  "egui-phosphor",
  "egui-probe",
