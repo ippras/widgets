@@ -1,5 +1,5 @@
 pub use self::{
-    mean_and_standard_deviation::MeanAndStandardDeviation,
+    array::Array, mean_and_standard_deviation::MeanAndStandardDeviation,
     precision_and_significant::PrecisionAndSignificant,
 };
 
