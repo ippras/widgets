@@ -839,7 +839,7 @@ dependencies = [
 [[package]]
 name = "egui-probe"
 version = "0.11.0"
-source = "git+https://github.com/kgv/egui-probe#798638436292ac20f2a9469e2d62aa1aadeca7c0"
+source = "git+https://github.com/kgv/egui-probe#ccd8c56fecc3d8128a8cb62d14c3664bf2c55615"
 dependencies = [
  "egui",
  "egui-phosphor",
@@ -850,7 +850,7 @@ dependencies = [
 [[package]]
 name = "egui-probe-proc"
 version = "0.11.0"
-source = "git+https://github.com/kgv/egui-probe#798638436292ac20f2a9469e2d62aa1aadeca7c0"
+source = "git+https://github.com/kgv/egui-probe#ccd8c56fecc3d8128a8cb62d14c3664bf2c55615"
 dependencies = [
  "convert_case",
  "proc-easy",

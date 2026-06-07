@@ -13,7 +13,7 @@ pub const MAX_PRECISION: usize = 16;
 /// Precision
 #[derive(Clone, Copy, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
 pub struct PrecisionAndSignificant {
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{PRECISION}")), range = 1..=MAX_PRECISION, bookmark = 1)]
+    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{PRECISION}")), range = 1..=MAX_PRECISION, bookmarks = [1, 3])]
     pub precision: usize,
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{SIGNIFICANT}")))]
     pub significant: bool,
