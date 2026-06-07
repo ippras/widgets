@@ -6,13 +6,13 @@ use const_format::formatcp;
 use display_option::DisplayOption;
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
-use egui_phosphor::regular::DOTS_THREE_OUTLINE;
+use egui_phosphor::regular::DOTS_THREE;
 use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
 
 /// Mean and standard deviation
 #[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = DOTS_THREE_OUTLINE)]
+#[egui_probe(name = DOTS_THREE)]
 pub struct MeanAndStandardDeviation {
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{MEAN}")))]
     pub mean: Option<StandardDeviation>,
@@ -20,7 +20,7 @@ pub struct MeanAndStandardDeviation {
 
 /// Mean
 #[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = DOTS_THREE_OUTLINE)]
+#[egui_probe(name = DOTS_THREE)]
 pub struct StandardDeviation {
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
     pub standard_deviation: Option<KindAndDdof>,
@@ -28,7 +28,7 @@ pub struct StandardDeviation {
 
 /// Standard deviation
 #[derive(Clone, Copy, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = DOTS_THREE_OUTLINE)]
+#[egui_probe(name = DOTS_THREE)]
 pub struct KindAndDdof {
     #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{KIND}")))]
     pub kind: Kind,
