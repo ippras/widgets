@@ -10,41 +10,6 @@ use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
 
 /// Mean and standard deviation
-#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = "")]
-pub struct Mean {
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{MEAN}")))]
-    pub mean: Option<StandardDeviation>,
-}
-
-/// Mean
-#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = "")]
-pub struct StandardDeviation {
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{STANDARD_DEVIATION}")))]
-    pub standard_deviation: Option<KindAndDdof>,
-}
-
-/// Standard deviation
-#[derive(Clone, Copy, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(name = "")]
-pub struct KindAndDdof {
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{KIND}")))]
-    pub kind: Kind,
-    #[egui_probe(name = _ui.localize(formatcp!("{PREFIX}_{DELTA_DEGREES_OF_FREEDOM}")), range = 0..=1)]
-    pub ddof: u8,
-}
-
-impl Default for KindAndDdof {
-    fn default() -> Self {
-        Self {
-            kind: Kind::Absolute,
-            ddof: 1,
-        }
-    }
-}
-
-/// Mean and standard deviation
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
 pub struct MeanAndStandardDeviation {
     pub mean: bool,
