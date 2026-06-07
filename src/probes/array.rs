@@ -116,6 +116,7 @@ impl<const N: usize> From<[&str; N]> for Array {
 pub struct Item {
     #[egui_probe(skip)]
     pub index: usize,
+    #[egui_probe(skip)]
     pub name: String,
     #[egui_probe(skip)]
     pub visible: bool,
