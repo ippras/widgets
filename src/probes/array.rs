@@ -112,6 +112,7 @@ impl<const N: usize> From<[&str; N]> for Array {
 
 /// Item
 #[derive(Clone, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+#[egui_probe(name = &self.name)]
 pub struct Item {
     #[egui_probe(skip)]
     pub index: usize,
