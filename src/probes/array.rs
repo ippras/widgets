@@ -7,11 +7,12 @@ use egui::{ComboBox, Popup, PopupCloseBehavior, RichText, Ui};
 use egui_dnd::dnd;
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::{DOTS_SIX_VERTICAL, FUNNEL, FUNNEL_X, SORT_ASCENDING};
+use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
 use std::slice::Iter;
 
 /// Array
-#[derive(Clone, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
 pub struct Array(Vec<Item>);
 
 impl Array {
@@ -110,7 +111,7 @@ impl<const N: usize> From<[&str; N]> for Array {
 }
 
 /// Item
-#[derive(Clone, Debug, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
 pub struct Item {
     pub index: usize,
     pub name: String,
