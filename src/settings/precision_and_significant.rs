@@ -9,9 +9,9 @@ use typed_builder::TypedBuilder;
 /// IEEE 754-2008
 pub const MAX_PRECISION: usize = 16;
 
-/// Precision
+/// Precision and significant
 #[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
-pub struct Precision {
+pub struct PrecisionAndSignificant {
     #[builder(default = 1, setter(skip))]
     pub precision: usize,
     #[builder(default, setter(skip))]
@@ -21,7 +21,7 @@ pub struct Precision {
     pub percent: Option<bool>,
 }
 
-impl Precision {
+impl PrecisionAndSignificant {
     pub fn new() -> Self {
         Self {
             precision: 1,
@@ -32,7 +32,7 @@ impl Precision {
     }
 }
 
-impl Precision {
+impl PrecisionAndSignificant {
     pub fn show(&mut self, ui: &mut Ui) {
         // Precision
         ui.horizontal(|ui| {
