@@ -3,7 +3,6 @@ use const_format::formatcp;
 use egui::{Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
-use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
 use typed_builder::TypedBuilder;
 

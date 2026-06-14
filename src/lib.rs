@@ -14,8 +14,8 @@ pub mod l10n {
 
 pub mod buttons;
 pub mod r#const;
-pub mod probes;
 pub mod settings;
+pub mod variants;
 
 #[cfg(feature = "fatty_acids")]
 pub mod fatty_acids;

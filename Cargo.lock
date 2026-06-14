@@ -533,15 +533,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d52eff69cd5e647efe296129160853a42795992097e8af39800e1060caeea9b"
 
 [[package]]
-name = "convert_case"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "baaaa0ecca5b51987b9423ccdc971514dd8b0bb7b4060b983d3664dad3f1f89f"
-dependencies = [
- "unicode-segmentation",
-]
-
-[[package]]
 name = "core-foundation"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -837,29 +828,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "egui-probe"
-version = "0.11.0"
-source = "git+https://github.com/kgv/egui-probe#ccd8c56fecc3d8128a8cb62d14c3664bf2c55615"
-dependencies = [
- "egui",
- "egui-phosphor",
- "egui-probe-proc",
- "egui_dnd",
-]
-
-[[package]]
-name = "egui-probe-proc"
-version = "0.11.0"
-source = "git+https://github.com/kgv/egui-probe#ccd8c56fecc3d8128a8cb62d14c3664bf2c55615"
-dependencies = [
- "convert_case",
- "proc-easy",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "egui-winit"
 version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -929,6 +897,30 @@ dependencies = [
  "itertools",
  "log",
  "serde",
+]
+
+[[package]]
+name = "egui_variant"
+version = "0.1.0"
+source = "git+https://github.com/kgv/egui_variant#4466d5bffbecbfc5181e52d30b9eca8ee8d674f0"
+dependencies = [
+ "egui",
+ "egui-phosphor",
+ "egui_dnd",
+ "egui_variant_proc",
+ "typed-builder",
+]
+
+[[package]]
+name = "egui_variant_proc"
+version = "0.1.0"
+source = "git+https://github.com/kgv/egui_variant#4466d5bffbecbfc5181e52d30b9eca8ee8d674f0"
+dependencies = [
+ "const_format",
+ "proc-easy",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -4830,10 +4822,10 @@ dependencies = [
  "display_option",
  "egui",
  "egui-phosphor",
- "egui-probe",
  "egui_dnd",
  "egui_l10n",
  "egui_tiles",
+ "egui_variant",
  "fatty_acid_expressions",
  "itertools",
  "ordered-float",

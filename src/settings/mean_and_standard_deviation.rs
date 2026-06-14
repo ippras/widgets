@@ -6,7 +6,6 @@ use const_format::formatcp;
 use display_option::DisplayOption;
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
-use egui_probe::EguiProbe;
 use serde::{Deserialize, Serialize};
 
 /// Mean and standard deviation
@@ -87,8 +86,7 @@ impl MeanAndStandardDeviation {
 }
 
 /// Standard deviation kind
-#[derive(Clone, Copy, Debug, Default, Deserialize, EguiProbe, Hash, PartialEq, Serialize)]
-#[egui_probe(tags combobox)]
+#[derive(Clone, Copy, Debug, Default, Deserialize, Hash, PartialEq, Serialize)]
 pub enum Kind {
     #[default]
     Absolute,
