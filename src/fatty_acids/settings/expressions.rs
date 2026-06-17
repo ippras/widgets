@@ -3,7 +3,9 @@ use const_format::formatcp;
 use egui::Ui;
 use egui_l10n::ContextExt as _;
 use fatty_acid_expressions::r#const::{
-    BIODIESEL, METABOLIC, NUTRITIONAL, PREFIX as FAE, RATIO, SUM, ratio, sum,
+    RATIO, SUM,
+    ratio::{self, BIODIESEL, METABOLIC, NUTRITIONAL},
+    sum,
 };
 use serde::{Deserialize, Serialize};
 
@@ -26,10 +28,9 @@ impl Expressions {
 impl Expressions {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{FAE}_{SUM}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{FAE}_{SUM}.hover")));
-                });
+            ui.label(ui.localize(SUM)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{SUM}.hover")));
+            });
             self.sum.show(ui);
         });
         self.ratio.show(ui);
@@ -57,24 +58,21 @@ impl Ratio {
 impl Ratio {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{BIODIESEL}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{BIODIESEL}.hover")));
-                });
+            ui.label(ui.localize(BIODIESEL)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{BIODIESEL}.hover")));
+            });
             self.biodiesel.show(ui);
         });
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{METABOLIC}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{METABOLIC}.hover")));
-                });
+            ui.label(ui.localize(METABOLIC)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{METABOLIC}.hover")));
+            });
             self.metabolic.show(ui);
         });
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{NUTRITIONAL}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{FAE}_{RATIO}_{NUTRITIONAL}.hover")));
-                });
+            ui.label(ui.localize(NUTRITIONAL)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{NUTRITIONAL}.hover")));
+            });
             self.nutritional.show(ui);
         });
     }
