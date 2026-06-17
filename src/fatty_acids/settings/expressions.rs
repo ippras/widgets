@@ -4,7 +4,10 @@ use egui::Ui;
 use egui_l10n::ContextExt as _;
 use fatty_acid_expressions::r#const::{
     RATIO, SUM,
-    ratio::{self, BIODIESEL, METABOLIC, NUTRITIONAL},
+    ratio::{
+        BIODIESEL, METABOLIC, NUTRITIONAL, biodiesel::RATIOS as BIODIESEL_RATIOS,
+        metabolic::RATIOS as METABOLIC_RATIOS, nutritional::RATIOS as NUTRITIONAL_RATIOS,
+    },
     sum,
 };
 use serde::{Deserialize, Serialize};
@@ -48,9 +51,9 @@ pub struct Ratio {
 impl Ratio {
     fn new() -> Self {
         Self {
-            biodiesel: Array::from(ratio::biodiesel::RATIOS),
-            metabolic: Array::from(ratio::metabolic::RATIOS),
-            nutritional: Array::from(ratio::nutritional::RATIOS),
+            biodiesel: Array::from(BIODIESEL_RATIOS),
+            metabolic: Array::from(METABOLIC_RATIOS),
+            nutritional: Array::from(NUTRITIONAL_RATIOS),
         }
     }
 }
