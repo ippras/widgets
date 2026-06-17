@@ -10,35 +10,32 @@ use typed_builder::TypedBuilder;
 pub const MAX_PRECISION: usize = 16;
 
 /// Precision and significant
-#[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
-pub struct PrecisionAndSignificant {
+#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
+#[serde_as]
+pub struct PrecisionAndSignificant<const N: usize> {
     #[builder(default = 1, setter(skip))]
     pub precision: usize,
     #[builder(default, setter(skip))]
     pub significant: bool,
 
-    #[builder(default = Vec::new())]
-    #[builder(mutators(
-        fn bookmark(self, value: usize) {
-            self.bookmarks.push(value);
-        }
-    ))]
-    pub bookmarks: Vec<usize>,
+    #[builder(default = [0; N])]
+    #[serde_as(as = "[_; N]")]
+    pub bookmarks: [usize; N],
     // #[builder(default, setter(strip_option))]
     // pub percent: Option<bool>,
 }
 
-impl PrecisionAndSignificant {
+impl<const N: usize> PrecisionAndSignificant<N> {
     pub fn new() -> Self {
         Self {
             precision: 1,
             significant: false,
-            bookmarks: Vec::new(),
+            bookmarks: [0; N],
         }
     }
 }
 
-impl PrecisionAndSignificant {
+impl<const N: usize> PrecisionAndSignificant<N> {
     pub fn show(&mut self, ui: &mut Ui) {
         // Precision
         ui.horizontal(|ui| {
