@@ -43,9 +43,15 @@ impl<const N: usize> PrecisionAndSignificant<N> {
                     ui.label(ui.localize(formatcp!("{PREFIX}_{PRECISION}.hover")));
                 });
             Slider::new(&mut self.precision, 1..=MAX_PRECISION).ui(ui);
-            if ui.button((BOOKMARK, "3")).clicked() {
-                self.precision = 3;
-            };
+            if !self.bookmarks.is_empty() {
+                ui.menu_button(BOOKMARK, |ui| {
+                    for bookmark in self.bookmarks {
+                        if ui.button((BOOKMARK, bookmark.to_string())).clicked() {
+                            self.precision = bookmark;
+                        }
+                    }
+                });
+            }
         });
 
         // Significant
