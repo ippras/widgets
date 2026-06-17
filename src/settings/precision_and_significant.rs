@@ -61,15 +61,15 @@ impl PrecisionAndSignificant {
             ui.checkbox(&mut self.significant, ());
         });
 
-        // Percent
-        if let Some(percent) = &mut self.percent {
-            ui.horizontal(|ui| {
-                ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}")))
-                    .on_hover_ui(|ui| {
-                        ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}.hover")));
-                    });
-                ui.checkbox(percent, ());
-            });
-        }
+        // // Percent
+        // if let Some(percent) = &mut self.percent {
+        //     ui.horizontal(|ui| {
+        //         ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}")))
+        //             .on_hover_ui(|ui| {
+        //                 ui.label(ui.localize(formatcp!("{PREFIX}_{PERCENT}.hover")));
+        //             });
+        //         ui.checkbox(percent, ());
+        //     });
+        // }
     }
 }
