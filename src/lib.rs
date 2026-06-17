@@ -17,9 +17,6 @@ pub mod r#const;
 pub mod settings;
 pub mod variants;
 
-#[cfg(feature = "fatty_acids")]
-pub mod fatty_acids;
-
 #[cfg(feature = "polars")]
 pub mod polars;
 

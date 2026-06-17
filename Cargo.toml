@@ -40,6 +40,3 @@ polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", featu
 default = ["polars", "serde"]
 
 polars = ["dep:polars", "dep:polars-utils", "dep:polars_ext"]
-
-# fatty_acids = ["dep:fatty_acid_expressions"]
-# fatty_acid_expressions = { git = "https://github.com/ippras/fatty_acid_expressions", optional = true }
