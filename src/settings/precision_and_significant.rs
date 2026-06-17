@@ -3,15 +3,16 @@ use const_format::formatcp;
 use egui::{Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
-use serde::{Deserialize, Serialize};
+use serde_with::serde_as;
 use typed_builder::TypedBuilder;
 
 /// IEEE 754-2008
 pub const MAX_PRECISION: usize = 16;
 
 /// Precision and significant
-#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, TypedBuilder)]
 #[serde_as]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct PrecisionAndSignificant<const N: usize> {
     #[builder(default = 1, setter(skip))]
     pub precision: usize,
@@ -21,8 +22,6 @@ pub struct PrecisionAndSignificant<const N: usize> {
     #[builder(default = [0; N])]
     #[serde_as(as = "[_; N]")]
     pub bookmarks: [usize; N],
-    // #[builder(default, setter(strip_option))]
-    // pub percent: Option<bool>,
 }
 
 impl<const N: usize> PrecisionAndSignificant<N> {

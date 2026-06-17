@@ -20,9 +20,10 @@ polars = { version = "=0.52.0", default-features = false, features = [
     "lazy",
 ], optional = true }
 polars-utils = { version = "=0.52.0", features = ["nightly"], optional = true }
-serde = { version = "1.0.228", features = ["derive", "std"] }
 serde_with = "3.21.0"
 typed-builder = "0.23.2"
+
+serde = { version = "1.0.228", features = ["derive", "std"], optional = true }
 
 display_option = { git = "https://github.com/kgv/display_option" }
 egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", features = [
@@ -37,7 +38,7 @@ polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", featu
 ], optional = true }
 
 [features]
-default = ["fatty_acids", "polars"]
+default = ["fatty_acids", "polars", "serde"]
 
 fatty_acids = ["dep:fatty_acid_expressions"]
 polars = ["dep:polars", "dep:polars-utils", "dep:polars_ext"]
