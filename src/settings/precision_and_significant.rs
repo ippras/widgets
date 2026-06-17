@@ -46,9 +46,7 @@ impl<const N: usize> PrecisionAndSignificant<N> {
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
                     for bookmark in self.bookmarks {
-                        if ui.button(bookmark.to_string()).clicked() {
-                            self.precision = bookmark;
-                        }
+                        ui.selectable_value(&mut self.precision, bookmark, bookmark.to_string());
                     }
                 });
             }
