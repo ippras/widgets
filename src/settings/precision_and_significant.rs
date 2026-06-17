@@ -17,8 +17,15 @@ pub struct PrecisionAndSignificant {
     #[builder(default, setter(skip))]
     pub significant: bool,
 
-    #[builder(default, setter(strip_option))]
-    pub percent: Option<bool>,
+    #[builder(default = Vec::new())]
+    #[mutator(
+        fn bookmark(self, value: u32) {
+            self.bookmarks.push(value);
+        }
+    )]
+    pub bookmarks: Vec<usize>,
+    // #[builder(default, setter(strip_option))]
+    // pub percent: Option<bool>,
 }
 
 impl PrecisionAndSignificant {
@@ -26,8 +33,7 @@ impl PrecisionAndSignificant {
         Self {
             precision: 1,
             significant: false,
-
-            percent: None,
+            bookmarks: Vec::new(),
         }
     }
 }
