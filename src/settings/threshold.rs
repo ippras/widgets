@@ -145,13 +145,15 @@ impl Threshold {
                 .show_ui(ui, |ui| {
                     let mut index = 0;
                     for (lipid, selected) in zip(lipids, &mut self.manual) {
-                        let index = if *selected {
-                            index.to_string()
+                        let atoms = if *selected {
+                            let atoms = (index.to_string(), lipid).into_atoms();
+                            index += 1;
+                            atoms
                         } else {
-                            EM_DASH.to_string()
+                            (EM_DASH, lipid).into_atoms()
                         };
                         if ui
-                            .toggle_value(selected, (index, lipid))
+                            .toggle_value(selected, atoms)
                             .on_hover_text(lipid)
                             .changed()
                         {
