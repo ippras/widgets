@@ -1,13 +1,15 @@
 use crate::{
     r#const::{
-        ACTION, AUTO, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT, SORT_BY_MINOR_MAJOR,
-        THRESHOLD,
+        ACTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT,
+        SORT_BY_MINOR_MAJOR, THRESHOLD,
     },
     settings::HighlightSortFilter,
     utils::format_list_truncated,
 };
 use const_format::formatcp;
-use egui::{ComboBox, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget};
+use egui::{
+    ComboBox, IntoAtoms, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget,
+};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
 use ordered_float::OrderedFloat;
@@ -141,9 +143,15 @@ impl Threshold {
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&selected_text)
                 .show_ui(ui, |ui| {
+                    let mut index = 0;
                     for (lipid, selected) in zip(lipids, &mut self.manual) {
+                        let index = if *selected {
+                            index.to_string()
+                        } else {
+                            EM_DASH.to_string()
+                        };
                         if ui
-                            .toggle_value(selected, lipid)
+                            .toggle_value(selected, (index, lipid))
                             .on_hover_text(lipid)
                             .changed()
                         {
