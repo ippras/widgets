@@ -55,8 +55,6 @@ impl Major {
         });
         self.auto(ui, percent);
         self.manual(ui, lipids);
-        ui.separator();
-        self.highlight_sort_filter.show(ui);
     }
 
     /// Auto threshold

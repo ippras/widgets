@@ -86,7 +86,8 @@ impl MeanAndStandardDeviation {
 }
 
 /// Standard deviation kind
-#[derive(Clone, Copy, Debug, Default, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Kind {
     #[default]
     Absolute,
