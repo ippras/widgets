@@ -8,7 +8,7 @@ use crate::{
 };
 use const_format::formatcp;
 use egui::{
-    ComboBox, IntoAtoms, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget,
+    ComboBox, Grid, IntoAtoms, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget,
 };
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
@@ -139,27 +139,29 @@ impl Threshold {
             let selected_text = format_list_truncated(
                 zip(&self.manual, lipids).filter_map(|(keep, lipid)| keep.then_some(lipid)),
             );
-            ComboBox::from_id_salt(ui.next_auto_id())
+            ComboBox::from_id_salt(ui.make_persistent_id("ComboBox"))
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&selected_text)
                 .show_ui(ui, |ui| {
-                    let mut index = 0;
-                    for (lipid, selected) in zip(lipids, &mut self.manual) {
-                        let atoms = if *selected {
-                            let atoms = (index.to_string(), lipid).into_atoms();
-                            index += 1;
-                            atoms
-                        } else {
-                            (EM_DASH, lipid).into_atoms()
-                        };
-                        if ui
-                            .toggle_value(selected, atoms)
-                            .on_hover_text(lipid)
-                            .changed()
-                        {
-                            self.kind = Kind::Manual;
+                    Grid::new(ui.make_persistent_id("Grid")).show(ui, |ui| {
+                        let mut index = 0;
+                        for (lipid, selected) in zip(lipids, &mut self.manual) {
+                            let atoms = if *selected {
+                                ui.label(index.to_string());
+                                index += 1;
+                            } else {
+                                ui.label(EM_DASH);
+                            };
+                            if ui
+                                .toggle_value(selected, lipid)
+                                .on_hover_text(lipid)
+                                .changed()
+                            {
+                                self.kind = Kind::Manual;
+                            }
                         }
-                    }
+                        ui.end_row();
+                    });
                 })
                 .response
                 .on_hover_ui(|ui| {
