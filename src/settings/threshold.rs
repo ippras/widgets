@@ -14,9 +14,7 @@ impl ThresholdZero {
     pub fn new() -> Self {
         Self { checked: false }
     }
-}
 
-impl ThresholdZero {
     pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{WIDGETS}_{THRESHOLD}{ZERO}")))
