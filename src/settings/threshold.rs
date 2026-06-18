@@ -124,7 +124,7 @@ impl Threshold {
                             bookmark.to_string()
                         };
                         if ui
-                            .selectable_value(&mut self.precision, *bookmark, text)
+                            .selectable_value(&mut self.auto, *bookmark, text)
                             .changed()
                         {
                             self.auto = *bookmark;
