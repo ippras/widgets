@@ -10,31 +10,33 @@ use typed_builder::TypedBuilder;
 pub const MAX_PRECISION: usize = 16;
 
 /// Precision and significant
-#[derive(Clone, Copy, Debug, Hash, PartialEq, TypedBuilder)]
+#[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[serde_as]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PrecisionSignificant<const N: usize> {
+pub struct PrecisionSignificant {
     #[builder(default = 1, setter(skip))]
     pub precision: usize,
     #[builder(default, setter(skip))]
     pub significant: bool,
 
-    #[builder(default = [0; N])]
-    #[serde_as(as = "[_; N]")]
-    pub bookmarks: [usize; N],
+    #[builder(default, via_mutators, mutators(
+        pub fn bookmark(self, value: usize) {
+            self.bookmarks.push(value);
+        }
+    ))]
+    pub bookmarks: Vec<usize>,
+    // #[builder(default = [0; N])]
+    // #[serde_as(as = "[_; N]")]
+    // pub bookmarks: [usize; N],
 }
 
-impl<const N: usize> PrecisionSignificant<N> {
+impl PrecisionSignificant {
     pub fn new() -> Self {
-        Self {
-            precision: 1,
-            significant: false,
-            bookmarks: [0; N],
-        }
+        Self::builder().build()
     }
 }
 
-impl<const N: usize> PrecisionSignificant<N> {
+impl PrecisionSignificant {
     pub fn show(&mut self, ui: &mut Ui) {
         // Precision
         ui.horizontal(|ui| {
@@ -45,8 +47,8 @@ impl<const N: usize> PrecisionSignificant<N> {
             Slider::new(&mut self.precision, 1..=MAX_PRECISION).ui(ui);
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
-                    for bookmark in self.bookmarks {
-                        ui.selectable_value(&mut self.precision, bookmark, bookmark.to_string());
+                    for bookmark in &self.bookmarks {
+                        ui.selectable_value(&mut self.precision, *bookmark, bookmark.to_string());
                     }
                 });
             }

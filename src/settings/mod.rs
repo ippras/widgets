@@ -4,6 +4,7 @@ pub use self::{
     precision_significant::PrecisionSignificant, sort::Sort, threshold::Threshold,
 };
 
+// pub mod option;
 pub mod _threshold;
 pub mod array;
 pub mod highlight_sort_filter;
