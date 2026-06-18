@@ -7,7 +7,7 @@ use crate::{
     utils::format_list_truncated,
 };
 use const_format::formatcp;
-use egui::{ComboBox, PopupCloseBehavior, Slider, SliderClamping, Ui, Widget};
+use egui::{ComboBox, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
 use ordered_float::OrderedFloat;
@@ -117,6 +117,7 @@ impl Threshold {
             // }
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
+                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
                     for bookmark in &self.bookmarks {
                         let text = if percent {
                             format!("{}%", bookmark * 100.0)
