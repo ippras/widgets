@@ -117,12 +117,12 @@ impl Threshold {
             // }
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
-                    let text = if percent {
-                        format!("{}%", bookmark * 100.0)
-                    } else {
-                        bookmark.to_string()
-                    };
                     for bookmark in &self.bookmarks {
+                        let text = if percent {
+                            format!("{}%", bookmark * 100.0)
+                        } else {
+                            bookmark.to_string()
+                        };
                         if ui
                             .selectable_value(&mut self.precision, *bookmark, text)
                             .changed()
