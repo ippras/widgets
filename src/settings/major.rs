@@ -13,12 +13,12 @@ use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
 use ordered_float::OrderedFloat;
 use polars::prelude::*;
-use serde::{Deserialize, Serialize};
 use std::iter::zip;
 use typed_builder::TypedBuilder;
 
 /// Major
-#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize, TypedBuilder)]
+#[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Major {
     #[builder(default, setter(skip))]
     pub auto: OrderedFloat<f64>,
@@ -28,9 +28,6 @@ pub struct Major {
     pub manual: Vec<bool>,
     // #[builder(default = Operator::Max, setter(skip))]
     // pub operator: Operator,
-    #[builder(default, setter(skip))]
-    pub highlight_sort_filter: HighlightSortFilter,
-
     #[builder(default, setter(into, strip_option))]
     bookmark: Option<OrderedFloat<f64>>,
 }

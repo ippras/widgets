@@ -6,10 +6,10 @@ use const_format::formatcp;
 use display_option::DisplayOption;
 use egui::{ComboBox, Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;
-use serde::{Deserialize, Serialize};
 
 /// Mean and standard deviation
-#[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct MeanAndStandardDeviation {
     pub mean: bool,
     pub standard_deviation: bool,

@@ -1,14 +1,14 @@
 use crate::{
     Show,
-    r#const::{FILTER, HIGHLIGHT, PREFIX as WIDGETS, SORT},
+    r#const::{FILTER, HIGHLIGHT, PREFIX, SORT},
 };
 use const_format::formatcp;
 use egui::Ui;
 use egui_l10n::ContextExt as _;
-use serde::{Deserialize, Serialize};
 
 /// Highlight, sort, filter
-#[derive(Clone, Copy, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct HighlightSortFilter {
     pub highlight: bool,
     pub sort: bool,
@@ -28,23 +28,23 @@ impl HighlightSortFilter {
 impl Show for HighlightSortFilter {
     fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{HIGHLIGHT}")))
+            ui.label(ui.localize(formatcp!("{PREFIX}_{HIGHLIGHT}")))
                 .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{WIDGETS}_{HIGHLIGHT}.hover")));
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{HIGHLIGHT}.hover")));
                 });
             ui.checkbox(&mut self.highlight, ());
         });
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{SORT}")))
+            ui.label(ui.localize(formatcp!("{PREFIX}_{SORT}")))
                 .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{WIDGETS}_{SORT}.hover")));
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{SORT}.hover")));
                 });
             ui.checkbox(&mut self.sort, ());
         });
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{WIDGETS}_{FILTER}")))
+            ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER}")))
                 .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{WIDGETS}_{FILTER}.hover")));
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER}.hover")));
                 });
             ui.checkbox(&mut self.filter, ());
         });
