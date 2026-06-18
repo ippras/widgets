@@ -38,6 +38,22 @@ impl Major {
     }
 
     pub fn show(&mut self, ui: &mut Ui, lipids: &[String], percent: bool) {
+        ui.horizontal(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}")))
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
+                });
+            ui.selectable_value(
+                &mut self.is_auto,
+                true,
+                ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")),
+            );
+            ui.selectable_value(
+                &mut self.is_auto,
+                false,
+                ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}")),
+            );
+        });
         self.auto(ui, percent);
         self.manual(ui, lipids);
         ui.separator();
@@ -47,13 +63,13 @@ impl Major {
     /// Auto threshold
     fn auto(&mut self, ui: &mut Ui, percent: bool) {
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}.hover")));
-                });
-            ui.checkbox(&mut self.is_auto, ()).on_hover_ui(|ui| {
-                ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
-            });
+            // ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")))
+            //     .on_hover_ui(|ui| {
+            //         ui.label(ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}.hover")));
+            //     });
+            // ui.checkbox(&mut self.is_auto, ()).on_hover_ui(|ui| {
+            //     ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
+            // });
             if !self.is_auto {
                 ui.disable();
             }
