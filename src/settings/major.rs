@@ -1,5 +1,4 @@
 use crate::{
-    Show,
     r#const::{
         AUTO_THRESHOLD, FILTER_THRESHOLD, IS_AUTO_THRESHOLD, MANUAL_THRESHOLD, OPERATOR, PREFIX,
         SORT_BY_MINOR_MAJOR,
@@ -202,7 +201,8 @@ impl Major {
 }
 
 /// Operator
-#[derive(Clone, Copy, Debug, Default, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Operator {
     #[default]
     Max,
