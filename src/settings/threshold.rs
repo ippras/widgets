@@ -102,18 +102,36 @@ impl Threshold {
             {
                 self.kind = Kind::Auto;
             }
+            // if !self.bookmarks.is_empty() {
+            //     for bookmark in &self.bookmarks {
+            //         let text = if percent {
+            //             format!("{}%", bookmark * 100.0)
+            //         } else {
+            //             bookmark.to_string()
+            //         };
+            //         if ui.button((BOOKMARK, text)).clicked() {
+            //             self.auto = *bookmark;
+            //             self.kind = Kind::Auto;
+            //         }
+            //     }
+            // }
             if !self.bookmarks.is_empty() {
-                for bookmark in &self.bookmarks {
+                ui.menu_button(BOOKMARK, |ui| {
                     let text = if percent {
                         format!("{}%", bookmark * 100.0)
                     } else {
                         bookmark.to_string()
                     };
-                    if ui.button((BOOKMARK, text)).clicked() {
-                        self.auto = *bookmark;
-                        self.kind = Kind::Auto;
+                    for bookmark in &self.bookmarks {
+                        if ui
+                            .selectable_value(&mut self.precision, *bookmark, text)
+                            .changed()
+                        {
+                            self.auto = *bookmark;
+                            self.kind = Kind::Auto;
+                        }
                     }
-                }
+                });
             }
             // if let Some(bookmark) = self.bookmark {
             //     let text = if percent {
