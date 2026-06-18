@@ -34,16 +34,6 @@ pub struct Threshold {
     bookmarks: Vec<OrderedFloat<f64>>,
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-
-    #[test]
-    fn test() {
-        let t = Threshold::builder().bookmark(0.5).bookmark(1.0).build();
-    }
-}
-
 impl Threshold {
     pub fn new() -> Self {
         Self::builder().build()
@@ -205,6 +195,12 @@ pub enum Kind {
     #[default]
     Auto,
     Manual,
+}
+
+impl Kind {
+    pub fn is_auto(&self) -> bool {
+        *self == Self::Auto
+    }
 }
 
 impl Kind {
