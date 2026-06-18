@@ -11,9 +11,10 @@ pub mod l10n {
 pub mod buttons;
 pub mod r#const;
 pub mod settings;
-pub mod variants;
 
 #[cfg(feature = "polars")]
 pub mod polars;
+#[cfg(feature = "variants")]
+pub mod variants;
 
 pub(crate) mod utils;

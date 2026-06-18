@@ -900,30 +900,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "egui_variant"
-version = "0.1.0"
-source = "git+https://github.com/kgv/egui_variant#eb645fd462b38f0d6b69c5b0dc5602cd074633e1"
-dependencies = [
- "egui",
- "egui-phosphor",
- "egui_dnd",
- "egui_variant_proc",
- "typed-builder",
-]
-
-[[package]]
-name = "egui_variant_proc"
-version = "0.1.0"
-source = "git+https://github.com/kgv/egui_variant#eb645fd462b38f0d6b69c5b0dc5602cd074633e1"
-dependencies = [
- "const_format",
- "proc-easy",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "either"
 version = "1.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -960,7 +936,6 @@ dependencies = [
  "bytemuck",
  "ecolor",
  "emath",
- "epaint_default_fonts",
  "font-types",
  "log",
  "nohash-hasher",
@@ -972,12 +947,6 @@ dependencies = [
  "smallvec",
  "vello_cpu",
 ]
-
-[[package]]
-name = "epaint_default_fonts"
-version = "0.34.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8970033a4282a7bcf899b38b5ed3a58b732fe093d03785d58648515d8d309da"
 
 [[package]]
 name = "equivalent"
@@ -3170,17 +3139,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "proc-easy"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "446f7efaa53a9589eaca5040dd749d9721e0ee60cf66f6c370e2716c031dcf7b"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "proc-macro-crate"
 version = "3.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4824,7 +4782,6 @@ dependencies = [
  "egui_dnd",
  "egui_l10n",
  "egui_tiles",
- "egui_variant",
  "itertools 0.15.0",
  "ordered-float",
  "polars",
