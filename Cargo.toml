@@ -20,7 +20,6 @@ polars = { version = "=0.52.0", default-features = false, features = [
     "lazy",
 ], optional = true }
 polars-utils = { version = "=0.52.0", features = ["nightly"], optional = true }
-serde_with = "3.21.0"
 typed-builder = "0.23.2"
 
 serde = { version = "1.0.228", features = ["derive", "std"], optional = true }
