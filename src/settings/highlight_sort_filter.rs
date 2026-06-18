@@ -1,7 +1,4 @@
-use crate::{
-    Show,
-    r#const::{FILTER, HIGHLIGHT, PREFIX, SORT},
-};
+use crate::r#const::{FILTER, HIGHLIGHT, PREFIX, SORT};
 use const_format::formatcp;
 use egui::Ui;
 use egui_l10n::ContextExt as _;
@@ -23,10 +20,8 @@ impl HighlightSortFilter {
             filter: false,
         }
     }
-}
 
-impl Show for HighlightSortFilter {
-    fn show(&mut self, ui: &mut Ui) {
+    pub fn show(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
             ui.label(ui.localize(formatcp!("{PREFIX}_{HIGHLIGHT}")))
                 .on_hover_ui(|ui| {
