@@ -31,7 +31,9 @@ pub struct Threshold {
             self.bookmarks.push(OrderedFloat(value));
         }
     ))]
-    bookmarks: Vec<OrderedFloat<f64>>,
+    pub bookmarks: Vec<OrderedFloat<f64>>,
+    #[builder(default)]
+    pub highlight_sort_filter: HighlightSortFilter,
 }
 
 impl Threshold {
@@ -58,6 +60,10 @@ impl Threshold {
         });
         self.auto(ui, percent);
         self.manual(ui, lipids);
+
+        ui.separator();
+
+        self.highlight_sort_filter.show(ui);
     }
 
     /// Auto threshold
