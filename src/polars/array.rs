@@ -3,7 +3,7 @@ use crate::{
         ARRAY, EM_DASH, MEAN, NO_BREAK_SPACE, PREFIX, RELATIVE_STANDARD_DEVIATION,
         STANDARD_DEVIATION,
     },
-    settings::MeanAndStandardDeviation,
+    settings::MeanStandardDeviation,
 };
 use const_format::formatcp;
 use egui::{Color32, Response, TextWrapMode, Ui, WidgetText};
@@ -30,7 +30,7 @@ pub struct Float64Array<'a> {
 impl<'a, T1, T2, T6> Float64ArrayBuilder<'a, (T1, T2, (), (), (), T6)> {
     pub fn mean_and_standard_deviation(
         self,
-        mean_and_standard_deviation: MeanAndStandardDeviation,
+        mean_and_standard_deviation: MeanStandardDeviation,
     ) -> Float64ArrayBuilder<'a, (T1, T2, (bool,), (bool,), (bool,), T6)> {
         self.mean(mean_and_standard_deviation.mean)
             .standard_deviation(mean_and_standard_deviation.standard_deviation)

@@ -3,7 +3,7 @@ use const_format::formatcp;
 use egui::Ui;
 use egui_l10n::ContextExt as _;
 
-/// Highlight, sort, filter
+/// Highlight and sort and filter
 #[derive(Clone, Copy, Debug, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct HighlightSortFilter {

@@ -15,14 +15,14 @@ use polars::prelude::*;
 use std::iter::zip;
 use typed_builder::TypedBuilder;
 
-/// Major
+/// Minors and majors
 #[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Major {
+pub struct MinorsMajors {
+    #[builder(default, setter(skip))]
+    pub kind: Kind,
     #[builder(default, setter(skip))]
     pub auto: OrderedFloat<f64>,
-    #[builder(default = true, setter(skip))]
-    pub is_auto: bool,
     #[builder(default, setter(skip))]
     pub manual: Vec<bool>,
     // #[builder(default = Operator::Max, setter(skip))]
@@ -31,7 +31,7 @@ pub struct Major {
     bookmark: Option<OrderedFloat<f64>>,
 }
 
-impl Major {
+impl MinorsMajors {
     pub fn new() -> Self {
         Self::builder().build()
     }
@@ -43,13 +43,13 @@ impl Major {
                     ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
                 });
             ui.selectable_value(
-                &mut self.is_auto,
-                true,
+                &mut self.kind,
+                Kind::Auto,
                 ui.localize(formatcp!("{PREFIX}_{AUTO_THRESHOLD}")),
             );
             ui.selectable_value(
-                &mut self.is_auto,
-                false,
+                &mut self.kind,
+                Kind::Manual,
                 ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}")),
             );
         });
@@ -67,7 +67,7 @@ impl Major {
             // ui.checkbox(&mut self.is_auto, ()).on_hover_ui(|ui| {
             //     ui.label(ui.localize(formatcp!("{PREFIX}_{IS_AUTO_THRESHOLD}.hover")));
             // });
-            if !self.is_auto {
+            if self.kind != Kind::Auto {
                 ui.disable();
             }
             if Slider::new(&mut self.auto.0, 0.0..=1.0)
@@ -90,7 +90,7 @@ impl Major {
                 .ui(ui)
                 .changed()
             {
-                self.is_auto = true;
+                self.kind = Kind::Auto;
             }
             if let Some(bookmark) = self.bookmark {
                 let text = if percent {
@@ -100,7 +100,7 @@ impl Major {
                 };
                 if ui.button((BOOKMARK, text)).clicked() {
                     self.auto = bookmark;
-                    self.is_auto = true;
+                    self.kind = Kind::Auto;
                 }
             }
         });
@@ -109,7 +109,7 @@ impl Major {
     /// Manual threshold
     fn manual(&mut self, ui: &mut Ui, lipids: &[String]) {
         ui.horizontal(|ui| {
-            if self.is_auto {
+            if self.kind != Kind::Manual {
                 ui.disable();
             }
             ui.label(ui.localize(formatcp!("{PREFIX}_{MANUAL_THRESHOLD}")))
@@ -129,7 +129,7 @@ impl Major {
                             .on_hover_text(lipid)
                             .changed()
                         {
-                            self.is_auto = false;
+                            self.kind = Kind::Manual;
                         }
                     }
                 })
@@ -139,29 +139,6 @@ impl Major {
                 });
         });
     }
-
-    // /// Filter thresholded
-    // fn filter(&mut self, ui: &mut Ui) {
-    //     ui.horizontal(|ui| {
-    //         ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}")))
-    //             .on_hover_ui(|ui| {
-    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{FILTER_THRESHOLD}.hover")));
-    //             });
-    //         ui.checkbox(&mut self.filter, ());
-    //     });
-    // }
-
-    // /// Sort thresholded
-    // fn sort(&mut self, ui: &mut Ui) {
-    //     ui.horizontal(|ui| {
-    //         // Sort by minor major
-    //         ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}")))
-    //             .on_hover_ui(|ui| {
-    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{SORT_BY_MINOR_MAJOR}.hover")));
-    //             });
-    //         ui.checkbox(&mut self.sort, ());
-    //     });
-    // }
 
     // /// Operator
     // fn operator(&mut self, ui: &mut Ui) {
@@ -196,6 +173,31 @@ impl Major {
     //             });
     //     });
     // }
+}
+
+/// Standard deviation kind
+#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum Kind {
+    #[default]
+    Auto,
+    Manual,
+}
+
+impl Kind {
+    pub const fn text(&self) -> &'static str {
+        match self {
+            Self::Auto => "Auto",
+            Self::Manual => "Manual",
+        }
+    }
+
+    pub const fn hover_text(&self) -> &'static str {
+        match self {
+            Self::Auto => "Auto.hover",
+            Self::Manual => "Manual.hover",
+        }
+    }
 }
 
 /// Operator
