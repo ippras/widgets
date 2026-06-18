@@ -1,5 +1,8 @@
 use crate::{
-    r#const::{AUTO, KIND, MANUAL, OPERATOR, PREFIX, SORT_BY_MINOR_MAJOR, THRESHOLD},
+    r#const::{
+        AUTO, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT, SORT_BY_MINOR_MAJOR,
+        THRESHOLD,
+    },
     settings::HighlightSortFilter,
     utils::format_list_truncated,
 };
@@ -33,7 +36,7 @@ pub struct Threshold {
     ))]
     pub bookmarks: Vec<OrderedFloat<f64>>,
     #[builder(default)]
-    pub highlight_sort_filter: HighlightSortFilter,
+    pub action: Action,
 }
 
 impl Threshold {
@@ -42,28 +45,29 @@ impl Threshold {
     }
 
     pub fn show(&mut self, ui: &mut Ui, lipids: &[String], percent: bool) {
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}.hover")));
-                });
-            ui.selectable_value(
-                &mut self.kind,
-                Kind::Auto,
-                ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}")),
-            );
-            ui.selectable_value(
-                &mut self.kind,
-                Kind::Manual,
-                ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{MANUAL}")),
-            );
-        });
+        self.kind(ui);
         self.auto(ui, percent);
         self.manual(ui, lipids);
 
         ui.separator();
 
-        self.highlight_sort_filter.show(ui);
+        self.action(ui);
+    }
+
+    /// Kind
+    fn kind(&mut self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}")))
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}.hover")));
+                });
+            for kind in [Kind::Auto, Kind::Manual] {
+                ui.selectable_value(&mut self.kind, kind, ui.localize(kind.text()))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(kind.hover_text()));
+                    });
+            }
+        });
     }
 
     /// Auto threshold
@@ -159,6 +163,18 @@ impl Threshold {
         });
     }
 
+    /// Action
+    fn action(&mut self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            for action in [Action::Highlight, Action::Sort, Action::Filter] {
+                ui.selectable_value(&mut self.action, action, ui.localize(action.text()))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(action.hover_text()));
+                    });
+            }
+        });
+    }
+
     // /// Operator
     // fn operator(&mut self, ui: &mut Ui) {
     //     ui.horizontal(|ui| {
@@ -194,19 +210,41 @@ impl Threshold {
     // }
 }
 
-/// Standard deviation kind
+/// Threshold action
+#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum Action {
+    #[default]
+    Highlight,
+    Sort,
+    Filter,
+}
+
+impl Action {
+    pub const fn text(&self) -> &'static str {
+        match self {
+            Self::Highlight => formatcp!("{PREFIX}_{HIGHLIGHT}"),
+            Self::Sort => formatcp!("{PREFIX}_{SORT}"),
+            Self::Filter => formatcp!("{PREFIX}_{FILTER}"),
+        }
+    }
+
+    pub const fn hover_text(&self) -> &'static str {
+        match self {
+            Self::Highlight => formatcp!("{PREFIX}_{HIGHLIGHT}.hover"),
+            Self::Sort => formatcp!("{PREFIX}_{SORT}.hover"),
+            Self::Filter => formatcp!("{PREFIX}_{FILTER}.hover"),
+        }
+    }
+}
+
+/// Threshold kind
 #[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Kind {
     #[default]
     Auto,
     Manual,
-}
-
-impl Kind {
-    pub fn is_auto(&self) -> bool {
-        *self == Self::Auto
-    }
 }
 
 impl Kind {
@@ -222,6 +260,12 @@ impl Kind {
             Self::Auto => formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}.hover"),
             Self::Manual => formatcp!("{PREFIX}_{THRESHOLD}_{MANUAL}.hover"),
         }
+    }
+}
+
+impl Kind {
+    pub fn is_auto(&self) -> bool {
+        *self == Self::Auto
     }
 }
 
