@@ -15,6 +15,7 @@ pub const SCROLL: &str = "Scroll";
 
 pub const ABOUT: &str = "About";
 pub const ABSOLUTE: &str = "Absolute";
+pub const ACTION: &str = "Action";
 pub const ARRAY: &str = "Array";
 pub const ASCENDING: &str = "Ascending";
 pub const AUTO: &str = "Auto";

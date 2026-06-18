@@ -1,6 +1,6 @@
 use crate::{
     r#const::{
-        AUTO, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT, SORT_BY_MINOR_MAJOR,
+        ACTION, AUTO, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT, SORT_BY_MINOR_MAJOR,
         THRESHOLD,
     },
     settings::HighlightSortFilter,
@@ -102,19 +102,6 @@ impl Threshold {
             {
                 self.kind = Kind::Auto;
             }
-            // if !self.bookmarks.is_empty() {
-            //     for bookmark in &self.bookmarks {
-            //         let text = if percent {
-            //             format!("{}%", bookmark * 100.0)
-            //         } else {
-            //             bookmark.to_string()
-            //         };
-            //         if ui.button((BOOKMARK, text)).clicked() {
-            //             self.auto = *bookmark;
-            //             self.kind = Kind::Auto;
-            //         }
-            //     }
-            // }
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
@@ -134,17 +121,6 @@ impl Threshold {
                     }
                 });
             }
-            // if let Some(bookmark) = self.bookmark {
-            //     let text = if percent {
-            //         format!("{}%", bookmark * 100.0)
-            //     } else {
-            //         bookmark.to_string()
-            //     };
-            //     if ui.button((BOOKMARK, text)).clicked() {
-            //         self.auto = bookmark;
-            //         self.kind = Kind::Auto;
-            //     }
-            // }
         });
     }
 
@@ -185,6 +161,10 @@ impl Threshold {
     /// Action
     fn action(&mut self, ui: &mut Ui) {
         ui.horizontal(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}")))
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}.hover")));
+                });
             for action in [Action::Highlight, Action::Sort, Action::Filter] {
                 ui.selectable_value(&mut self.action, action, ui.localize(action.text()))
                     .on_hover_ui(|ui| {

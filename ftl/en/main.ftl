@@ -6,6 +6,8 @@ Widgets_Threshold_Manual = Manual
     .hover = Manual threshold.
 Widgets_Threshold_Filter = Filter
     .hover = Filter threshold.
+Widgets_Threshold_Action = Action
+    .hover = Threshold action.
 
 Widgets_Array = Array
     .hover = Array.
