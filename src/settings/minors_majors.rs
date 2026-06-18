@@ -119,7 +119,7 @@ impl MinorsMajors {
             let selected_text = format_list_truncated(
                 zip(&self.manual, lipids).filter_map(|(keep, lipid)| keep.then_some(lipid)),
             );
-            ComboBox::from_id_salt("ManualThreshold")
+            ComboBox::from_id_salt(ui.next_auto_id())
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&selected_text)
                 .show_ui(ui, |ui| {
