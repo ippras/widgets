@@ -146,12 +146,7 @@ impl Threshold {
                     Grid::new(ui.make_persistent_id("Grid")).show(ui, |ui| {
                         let mut index = 0;
                         for (lipid, selected) in zip(lipids, &mut self.manual) {
-                            let atoms = if *selected {
-                                ui.label(index.to_string());
-                                index += 1;
-                            } else {
-                                ui.label(EM_DASH);
-                            };
+                            ui.label(index.to_string());
                             if ui
                                 .toggle_value(selected, lipid)
                                 .on_hover_text(lipid)
