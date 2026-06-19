@@ -144,8 +144,8 @@ impl Threshold {
                 .selected_text(&selected_text)
                 .show_ui(ui, |ui| {
                     Grid::new(ui.make_persistent_id("Grid")).show(ui, |ui| {
-                        let mut index = 0;
-                        for (lipid, selected) in zip(lipids, &mut self.manual) {
+                        for (index, (lipid, selected)) in zip(lipids, &mut self.manual).enumerate()
+                        {
                             ui.label(index.to_string());
                             if ui
                                 .toggle_value(selected, lipid)
