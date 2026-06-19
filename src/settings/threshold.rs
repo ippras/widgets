@@ -3,7 +3,7 @@ use crate::{
         ACTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT,
         SORT_BY_MINOR_MAJOR, THRESHOLD,
     },
-    settings::HighlightSortFilterVariant,
+    settings::HighlightSortFilter,
     utils::format_list_truncated,
 };
 use const_format::formatcp;
@@ -36,7 +36,7 @@ pub struct ThresholdVariant {
     ))]
     pub bookmarks: Vec<OrderedFloat<f64>>,
     #[builder(default)]
-    pub action: HighlightSortFilterVariant,
+    pub action: HighlightSortFilter,
 }
 
 impl ThresholdVariant {
@@ -51,7 +51,7 @@ impl ThresholdVariant {
 
         ui.separator();
 
-        self.action.show(ui);
+        self.action(ui);
     }
 
     /// Kind
@@ -160,6 +160,26 @@ impl ThresholdVariant {
                 .on_hover_ui(|ui| {
                     ui.label(selected_text);
                 });
+        });
+    }
+
+    /// Action
+    fn action(&mut self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}")))
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}.hover")));
+                });
+            for action in [
+                HighlightSortFilter::Highlight,
+                HighlightSortFilter::Sort,
+                HighlightSortFilter::Filter,
+            ] {
+                ui.selectable_value(&mut self.action, action, ui.localize(action.text()))
+                    .on_hover_ui(|ui| {
+                        ui.label(ui.localize(action.hover_text()));
+                    });
+            }
         });
     }
 

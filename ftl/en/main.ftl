@@ -4,10 +4,22 @@ Widgets_Threshold_Kind = Kind
     .hover = Threshold kind.
 Widgets_Threshold_Manual = Manual
     .hover = Manual threshold.
-Widgets_Threshold_Filter = Filter
-    .hover = Filter threshold.
-Widgets_Action = Action
+Widgets_Threshold_Action = Action
     .hover = Highlight sort or filter action.
+
+Widgets_Threshold_Highlight = Highlight
+    .hover = Highlight values that are less than the threshold.
+Widgets_Threshold_Filter = Filter
+    .hover = Filter values that are less than the threshold.
+Widgets_Threshold_Sort = Sort
+    .hover = Sort values greater than the threshold first, followed by those less than the threshold.
+
+Widgets_HighlightSortFilter_Highlight = Highlight
+    .hover = Highlight values that meet the condition.
+Widgets_HighlightSortFilter_Filter = Filter
+    .hover = Filter values that do not meet the condition.
+Widgets_HighlightSortFilter_Sort = Sort
+    .hover = Sort values that meet the condition first, followed by those that do not.
 
 Widgets_Array = Array
     .hover = Array.
@@ -58,11 +70,6 @@ Widgets_Descending = Descending
 
 Widgets_ThresholdZero = Threshold zero
     .hover = Threshold values equal to zero.
-Widgets_Highlight = Highlight
-    .hover = Highlight values that are less than the threshold.
-Widgets_Filter = Filter
-    .hover = Filter values that are less than the threshold.
-
 
 Widgets_CommaSeparatedValues = Comma-separated values
     .abbreviation = CSV
