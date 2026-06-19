@@ -9,7 +9,7 @@ use typed_builder::TypedBuilder;
 #[derive(Clone, Debug, Default, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct HighlightSortFilterVariant {
-    value: HighlightSortFilter,
+    pub value: HighlightSortFilter,
     #[builder(default = formatcp!("{PREFIX}_{ACTION}").into())]
     text: Cow<'static, str>,
     #[builder(default = formatcp!("{PREFIX}_{ACTION}.hover").into())]
