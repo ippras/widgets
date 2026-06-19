@@ -3,7 +3,7 @@ use crate::{
         ACTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT,
         SORT_BY_MINOR_MAJOR, THRESHOLD,
     },
-    settings::HighlightSortFilter,
+    settings::HighlightSortFilterVariant,
     utils::format_list_truncated,
 };
 use const_format::formatcp;
@@ -17,10 +17,10 @@ use polars::prelude::*;
 use std::iter::zip;
 use typed_builder::TypedBuilder;
 
-/// Threshold
+/// Threshold variant
 #[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct Threshold {
+pub struct ThresholdVariant {
     #[builder(default, setter(skip))]
     pub kind: Kind,
     #[builder(default, setter(skip))]
@@ -29,8 +29,6 @@ pub struct Threshold {
     pub manual: Vec<bool>,
     // #[builder(default = Operator::Max, setter(skip))]
     // pub operator: Operator,
-    // #[builder(default, setter(into, strip_option))]
-    // bookmark: Option<OrderedFloat<f64>>,
     #[builder(default, via_mutators, mutators(
         pub fn bookmark(self, value: f64) {
             self.bookmarks.push(OrderedFloat(value));
@@ -38,10 +36,10 @@ pub struct Threshold {
     ))]
     pub bookmarks: Vec<OrderedFloat<f64>>,
     #[builder(default)]
-    pub action: Action,
+    pub action: HighlightSortFilterVariant,
 }
 
-impl Threshold {
+impl ThresholdVariant {
     pub fn new() -> Self {
         Self::builder().build()
     }
@@ -53,7 +51,7 @@ impl Threshold {
 
         ui.separator();
 
-        self.action(ui);
+        self.action.show(ui);
     }
 
     /// Kind
@@ -165,22 +163,6 @@ impl Threshold {
         });
     }
 
-    /// Action
-    fn action(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}.hover")));
-                });
-            for action in [Action::Highlight, Action::Sort, Action::Filter] {
-                ui.selectable_value(&mut self.action, action, ui.localize(action.text()))
-                    .on_hover_ui(|ui| {
-                        ui.label(ui.localize(action.hover_text()));
-                    });
-            }
-        });
-    }
-
     // /// Operator
     // fn operator(&mut self, ui: &mut Ui) {
     //     ui.horizontal(|ui| {
@@ -214,34 +196,6 @@ impl Threshold {
     //             });
     //     });
     // }
-}
-
-/// Threshold action
-#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum Action {
-    #[default]
-    Highlight,
-    Sort,
-    Filter,
-}
-
-impl Action {
-    pub const fn text(&self) -> &'static str {
-        match self {
-            Self::Highlight => formatcp!("{PREFIX}_{HIGHLIGHT}"),
-            Self::Sort => formatcp!("{PREFIX}_{SORT}"),
-            Self::Filter => formatcp!("{PREFIX}_{FILTER}"),
-        }
-    }
-
-    pub const fn hover_text(&self) -> &'static str {
-        match self {
-            Self::Highlight => formatcp!("{PREFIX}_{HIGHLIGHT}.hover"),
-            Self::Sort => formatcp!("{PREFIX}_{SORT}.hover"),
-            Self::Filter => formatcp!("{PREFIX}_{FILTER}.hover"),
-        }
-    }
 }
 
 /// Threshold kind

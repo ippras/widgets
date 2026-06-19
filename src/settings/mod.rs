@@ -1,7 +1,14 @@
 pub use self::{
-    _threshold::ThresholdZero, array::Array, highlight_sort_filter::HighlightSortFilter,
-    mean_standard_deviation::MeanStandardDeviation, order::Order, percent::Percent, plot::Plot,
-    precision_significant::PrecisionSignificant, sort::Sort, threshold::Threshold,
+    _threshold::ThresholdZero,
+    array::Array,
+    highlight_sort_filter::{HighlightSortFilter, HighlightSortFilterVariant},
+    mean_standard_deviation::MeanStandardDeviation,
+    order::Order,
+    percent::Percent,
+    plot::Plot,
+    precision_significant::PrecisionSignificant,
+    sort::Sort,
+    threshold::ThresholdVariant,
 };
 
 // pub mod option;
