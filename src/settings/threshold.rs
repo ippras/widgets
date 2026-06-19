@@ -159,8 +159,8 @@ impl Threshold {
                             {
                                 self.kind = Kind::Manual;
                             }
+                            ui.end_row();
                         }
-                        ui.end_row();
                     });
                 })
                 .response
