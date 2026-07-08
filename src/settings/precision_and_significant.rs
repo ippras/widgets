@@ -11,7 +11,7 @@ pub const MAX_PRECISION: usize = 16;
 /// Precision and significant
 #[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct PrecisionSignificant {
+pub struct PrecisionAndSignificant {
     #[builder(default = 1, setter(skip))]
     pub precision: usize,
     #[builder(default, setter(skip))]
@@ -25,13 +25,13 @@ pub struct PrecisionSignificant {
     pub bookmarks: Vec<usize>,
 }
 
-impl PrecisionSignificant {
+impl PrecisionAndSignificant {
     pub fn new() -> Self {
         Self::builder().build()
     }
 }
 
-impl PrecisionSignificant {
+impl PrecisionAndSignificant {
     pub fn show(&mut self, ui: &mut Ui) {
         // Precision
         ui.horizontal(|ui| {

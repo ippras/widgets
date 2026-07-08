@@ -10,14 +10,14 @@ use egui_l10n::ContextExt as _;
 /// Mean and standard deviation
 #[derive(Clone, Copy, Debug, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct MeanStandardDeviation {
+pub struct MeanAndStandardDeviation {
     pub mean: bool,
     pub standard_deviation: bool,
     pub kind: Kind,
     pub ddof: u8,
 }
 
-impl MeanStandardDeviation {
+impl MeanAndStandardDeviation {
     pub fn new() -> Self {
         Self {
             mean: false,
