@@ -1,3 +1,5 @@
+#![feature(result_option_map_or_default)]
+
 use egui::Ui;
 
 pub mod l10n {
