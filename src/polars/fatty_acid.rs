@@ -1,3 +1,4 @@
+use crate::r#const::EM_DASH;
 use egui::{
     Button, DragValue, InnerResponse, Label, PopupCloseBehavior, Response, ScrollArea, TextStyle,
     TextWrapMode, Ui, Widget,
