@@ -10,6 +10,7 @@ const_format = "0.2.36"
 egui = { version = "0.34.3", default-features = false }
 egui-phosphor = "0.12.0"
 egui_dnd = "0.15.0"
+egui_extras = { version = "0.34.1", features = ["serde"], optional = true }
 egui_tiles = "0.15.0"
 itertools = "0.15.0"
 ordered-float = { version = "5.3.0", features = ["serde"] }
@@ -42,5 +43,11 @@ polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", featu
 [features]
 default = ["polars", "serde"]
 
-polars = ["dep:lipid", "dep:polars", "dep:polars-utils", "dep:polars_ext"]
+polars = [
+    "dep:egui_extras",
+    "dep:lipid",
+    "dep:polars",
+    "dep:polars-utils",
+    "dep:polars_ext",
+]
 variants = []
