@@ -28,6 +28,9 @@ display_option = { git = "https://github.com/kgv/display_option" }
 egui_l10n = { git = "https://github.com/ippras/egui_l10n", branch = "0.6", features = [
     "macros",
 ] }
+lipid = { git = "https://github.com/ippras/lipid", branch = "0.52", features = [
+    "serde",
+], optional = true }
 polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", features = [
     "array",
 ], optional = true }
@@ -39,5 +42,5 @@ polars_ext = { git = "https://github.com/kgv/polars_ext", branch = "0.52", featu
 [features]
 default = ["polars", "serde"]
 
-polars = ["dep:polars", "dep:polars-utils", "dep:polars_ext"]
+polars = ["dep:lipid", "dep:polars", "dep:polars-utils", "dep:polars_ext"]
 variants = []
