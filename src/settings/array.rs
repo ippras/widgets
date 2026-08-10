@@ -11,12 +11,63 @@ use serde::{Deserialize, Serialize};
 use std::slice::Iter;
 
 /// Array
-#[derive(Clone, Debug, Default, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
 pub struct Array(Vec<Item>);
 
 impl Array {
     pub fn new(items: Vec<Item>) -> Self {
         Self(items)
+    }
+
+    pub fn show_new(&mut self, ui: &mut Ui) {
+        ui.menu_button("A", |ui| {
+            self.content(ui)
+        });
+        // let selected_text = format_list_truncated(
+        //     self.0
+        //         .iter()
+        //         .filter_map(|item| item.visible.then_some(ui.localize(&item.name))),
+        // );
+        // let response = ComboBox::from_id_salt(ui.next_auto_id())
+        //     .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
+        //     .selected_text(&selected_text)
+        //     .show_ui(ui, |ui| self.content(ui))
+        //     .response;
+        // Popup::context_menu(&response)
+        //     .id(ui.next_auto_id().with("ContextMenu"))
+        //     .show(|ui| {
+        //         if ui
+        //             .button((FUNNEL, ui.localize(formatcp!("{PREFIX}_{CHECK_ALL}"))))
+        //             .on_hover_ui(|ui| {
+        //                 ui.label(ui.localize(formatcp!("{PREFIX}_{CHECK_ALL}.hover")));
+        //             })
+        //             .clicked()
+        //         {
+        //             for item in &mut self.0 {
+        //                 item.visible = true;
+        //             }
+        //         }
+        //         if ui
+        //             .button((FUNNEL_X, ui.localize(formatcp!("{PREFIX}_{UNCHECK_ALL}"))))
+        //             .on_hover_ui(|ui| {
+        //                 ui.label(ui.localize(formatcp!("{PREFIX}_{UNCHECK_ALL}.hover")));
+        //             })
+        //             .clicked()
+        //         {
+        //             for item in &mut self.0 {
+        //                 item.visible = false;
+        //             }
+        //         }
+        //         if ui
+        //             .button((SORT_ASCENDING, ui.localize(formatcp!("{PREFIX}_{SORT}"))))
+        //             .on_hover_ui(|ui| {
+        //                 ui.label(ui.localize(formatcp!("{PREFIX}_{SORT}.hover")));
+        //             })
+        //             .clicked()
+        //         {
+        //             self.0.sort_by_key(|item| item.index);
+        //         }
+        //     });
     }
 
     pub fn show(&mut self, ui: &mut Ui) {
