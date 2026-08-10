@@ -118,7 +118,7 @@ impl Array {
             });
     }
 
-    fn content(&mut self, ui: &mut Ui) {
+    pub fn content(&mut self, ui: &mut Ui) {
         let response = dnd(ui, ui.auto_id_with("Array")).show(
             self.0.iter_mut(),
             |ui, item, handle, _state| {
