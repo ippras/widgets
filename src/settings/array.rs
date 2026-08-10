@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 use std::slice::Iter;
 
 /// Array
-#[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
+#[derive(Clone, Debug, Default, Deserialize, Hash, PartialEq, Serialize)]
 pub struct Array(Vec<Item>);
 
 impl Array {
