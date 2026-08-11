@@ -20,9 +20,7 @@ impl Array {
     }
 
     pub fn show_new(&mut self, ui: &mut Ui) {
-        ui.menu_button("A", |ui| {
-            self.content(ui)
-        });
+        ui.menu_button("A", |ui| self.content(ui));
         // let selected_text = format_list_truncated(
         //     self.0
         //         .iter()
@@ -127,12 +125,11 @@ impl Array {
                     handle.ui(ui, |ui| {
                         ui.label(DOTS_SIX_VERTICAL);
                     });
-                    ui.checkbox(&mut item.visible, "");
-                    let mut text = RichText::new(ui.localize(&item.name));
+                    let mut atoms = RichText::new(ui.localize(&item.name));
                     if !visible {
-                        text = text.weak();
+                        atoms = atoms.weak();
                     }
-                    ui.label(text);
+                    ui.checkbox(&mut item.visible, atoms);
                 });
             },
         );
