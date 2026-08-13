@@ -8,7 +8,10 @@ use egui_dnd::dnd;
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::{DOTS_SIX_VERTICAL, FUNNEL, FUNNEL_X, SORT_ASCENDING};
 use serde::{Deserialize, Serialize};
-use std::slice::Iter;
+use std::{
+    ops::{Deref, DerefMut},
+    slice::Iter,
+};
 
 /// Array
 #[derive(Clone, Debug, Deserialize, Hash, PartialEq, Serialize)]
@@ -142,6 +145,20 @@ impl Array {
 impl Array {
     pub fn iter(&self) -> Iter<'_, Item> {
         self.0.iter()
+    }
+}
+
+impl Deref for Array {
+    type Target = Vec<Item>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for Array {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
     }
 }
 
