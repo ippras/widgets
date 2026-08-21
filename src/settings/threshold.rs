@@ -1,6 +1,6 @@
 use crate::{
     r#const::{
-        ACTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, OPERATOR, PREFIX, SORT,
+        ACTION, ARRAY_FUNCTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, PREFIX, SORT,
         SORT_BY_MINOR_MAJOR, THRESHOLD,
     },
     settings::HighlightSortFilter,
@@ -258,6 +258,36 @@ pub enum ArrayFunction {
     Min,
     Mean,
     Median,
+}
+
+impl ArrayFunction {
+    pub fn show(&mut self, ui: &mut Ui) {
+        ui.horizontal(|ui| {
+            const ID: &str = formatcp!("{PREFIX}_{ARRAY_FUNCTION}");
+
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
+            ComboBox::from_id_salt(ui.make_persistent_id("ComboBox"))
+                .selected_text(ui.localize(self.text()))
+                .show_ui(ui, |ui| {
+                    for array_function in [Self::Max, Self::Min, Self::Mean, Self::Median] {
+                        ui.selectable_value(
+                            self,
+                            array_function,
+                            ui.localize(array_function.text()),
+                        )
+                        .on_hover_ui(|ui| {
+                            ui.label(ui.localize(array_function.hover_text()));
+                        });
+                    }
+                })
+                .response
+                .on_hover_ui(|ui| {
+                    ui.label(ui.localize(self.hover_text()));
+                });
+        });
+    }
 }
 
 impl ArrayFunction {
