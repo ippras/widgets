@@ -56,11 +56,12 @@ impl ThresholdVariant {
 
     /// Kind
     fn kind(&mut self, ui: &mut Ui) {
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{KIND}");
+
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{KIND}.hover")));
-                });
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
             for kind in [Kind::Auto, Kind::Manual] {
                 ui.selectable_value(&mut self.kind, kind, ui.localize(kind.text()))
                     .on_hover_ui(|ui| {
@@ -72,14 +73,15 @@ impl ThresholdVariant {
 
     /// Auto threshold
     fn auto(&mut self, ui: &mut Ui, percent: bool) {
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}");
+
         ui.horizontal(|ui| {
             if self.kind != Kind::Auto {
                 ui.disable();
             }
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}.hover")));
-                });
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
             if Slider::new(&mut self.auto.0, 0.0..=1.0)
                 .clamping(SliderClamping::Always)
                 .custom_formatter(|mut value, _| {
@@ -126,22 +128,23 @@ impl ThresholdVariant {
 
     /// Manual threshold
     fn manual(&mut self, ui: &mut Ui, lipids: &[String]) {
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{MANUAL}");
+
         ui.horizontal(|ui| {
             if self.kind != Kind::Manual {
                 ui.disable();
             }
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{MANUAL}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{MANUAL}.hover")));
-                });
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
             let selected_text = format_list_truncated(
                 zip(&self.manual, lipids).filter_map(|(keep, lipid)| keep.then_some(lipid)),
             );
-            ComboBox::from_id_salt(ui.make_persistent_id("ComboBox"))
+            ComboBox::from_id_salt(ui.make_persistent_id(ID).with("ComboBox"))
                 .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
                 .selected_text(&selected_text)
                 .show_ui(ui, |ui| {
-                    Grid::new(ui.make_persistent_id("Grid")).show(ui, |ui| {
+                    Grid::new(ui.make_persistent_id(ID).with("Grid")).show(ui, |ui| {
                         for (index, (lipid, selected)) in zip(lipids, &mut self.manual).enumerate()
                         {
                             ui.label(index.to_string());
@@ -165,11 +168,12 @@ impl ThresholdVariant {
 
     /// Action
     fn action(&mut self, ui: &mut Ui) {
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}");
+
         ui.horizontal(|ui| {
-            ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}")))
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(formatcp!("{PREFIX}_{THRESHOLD}_{ACTION}.hover")));
-                });
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
             for action in [
                 HighlightSortFilter::Highlight,
                 HighlightSortFilter::Sort,
@@ -262,13 +266,13 @@ pub enum ArrayFunction {
 
 impl ArrayFunction {
     pub fn show(&mut self, ui: &mut Ui) {
-        ui.horizontal(|ui| {
-            const ID: &str = formatcp!("{PREFIX}_{ARRAY_FUNCTION}");
+        const ID: &str = formatcp!("{PREFIX}_{ARRAY_FUNCTION}");
 
+        ui.horizontal(|ui| {
             ui.label(ui.localize(ID)).on_hover_ui(|ui| {
                 ui.label(ui.localize(formatcp!("{ID}.hover")));
             });
-            ComboBox::from_id_salt(ui.make_persistent_id("ComboBox"))
+            ComboBox::from_id_salt(ui.make_persistent_id(ID).with("ComboBox"))
                 .selected_text(ui.localize(self.text()))
                 .show_ui(ui, |ui| {
                     for array_function in [Self::Max, Self::Min, Self::Mean, Self::Median] {
