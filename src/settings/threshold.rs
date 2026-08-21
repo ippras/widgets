@@ -1,15 +1,10 @@
 use crate::{
-    r#const::{
-        ACTION, ARRAY_FUNCTION, AUTO, EM_DASH, FILTER, HIGHLIGHT, KIND, MANUAL, PREFIX, SORT,
-        SORT_BY_MINOR_MAJOR, THRESHOLD,
-    },
+    r#const::{ACTION, AUTO, KIND, MANUAL, PREFIX, THRESHOLD},
     settings::HighlightSortFilter,
     utils::format_list_truncated,
 };
 use const_format::formatcp;
-use egui::{
-    ComboBox, Grid, IntoAtoms, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget,
-};
+use egui::{ComboBox, Grid, PopupCloseBehavior, Slider, SliderClamping, TextWrapMode, Ui, Widget};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::BOOKMARK;
 use ordered_float::OrderedFloat;
@@ -27,8 +22,6 @@ pub struct ThresholdVariant {
     pub auto: OrderedFloat<f64>,
     #[builder(default, setter(skip))]
     pub manual: Vec<bool>,
-    // #[builder(default = Operator::Max, setter(skip))]
-    // pub operator: Operator,
     #[builder(default, via_mutators, mutators(
         pub fn bookmark(self, value: f64) {
             self.bookmarks.push(OrderedFloat(value));
@@ -186,40 +179,6 @@ impl ThresholdVariant {
             }
         });
     }
-
-    // /// Operator
-    // fn operator(&mut self, ui: &mut Ui) {
-    //     ui.horizontal(|ui| {
-    //         ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}")))
-    //             .on_hover_ui(|ui| {
-    //                 ui.label(ui.localize(formatcp!("{PREFIX}_{OPERATOR}.hover")));
-    //             });
-    //         ComboBox::from_id_salt("Operator")
-    //             .close_behavior(PopupCloseBehavior::CloseOnClickOutside)
-    //             .selected_text(&ui.localize(self.operator.text()))
-    //             .show_ui(ui, |ui| {
-    //                 for selected_value in [
-    //                     Operator::Max,
-    //                     Operator::Min,
-    //                     Operator::Mean,
-    //                     Operator::Median,
-    //                 ] {
-    //                     ui.selectable_value(
-    //                         &mut self.operator,
-    //                         selected_value,
-    //                         ui.localize(selected_value.text()),
-    //                     )
-    //                     .on_hover_ui(|ui| {
-    //                         ui.label(ui.localize(self.operator.hover_text()));
-    //                     });
-    //                 }
-    //             })
-    //             .response
-    //             .on_hover_ui(|ui| {
-    //                 ui.label(ui.localize(self.operator.hover_text()));
-    //             });
-    //     });
-    // }
 }
 
 /// Threshold kind
@@ -250,66 +209,5 @@ impl Kind {
 impl Kind {
     pub fn is_auto(&self) -> bool {
         *self == Self::Auto
-    }
-}
-
-/// Array function
-#[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum ArrayFunction {
-    #[default]
-    Max,
-    Min,
-    Mean,
-    Median,
-}
-
-impl ArrayFunction {
-    pub fn show(&mut self, ui: &mut Ui) {
-        const ID: &str = formatcp!("{PREFIX}_{ARRAY_FUNCTION}");
-
-        ui.horizontal(|ui| {
-            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
-                ui.label(ui.localize(formatcp!("{ID}.hover")));
-            });
-            ComboBox::from_id_salt(ui.make_persistent_id(ID).with("ComboBox"))
-                .selected_text(ui.localize(self.text()))
-                .show_ui(ui, |ui| {
-                    for array_function in [Self::Max, Self::Min, Self::Mean, Self::Median] {
-                        ui.selectable_value(
-                            self,
-                            array_function,
-                            ui.localize(array_function.text()),
-                        )
-                        .on_hover_ui(|ui| {
-                            ui.label(ui.localize(array_function.hover_text()));
-                        });
-                    }
-                })
-                .response
-                .on_hover_ui(|ui| {
-                    ui.label(ui.localize(self.hover_text()));
-                });
-        });
-    }
-}
-
-impl ArrayFunction {
-    pub const fn text(&self) -> &'static str {
-        match self {
-            Self::Max => "Max",
-            Self::Min => "Min",
-            Self::Mean => "Mean",
-            Self::Median => "Median",
-        }
-    }
-
-    pub const fn hover_text(&self) -> &'static str {
-        match self {
-            Self::Max => "Max.hover",
-            Self::Min => "Min.hover",
-            Self::Mean => "Mean.hover",
-            Self::Median => "Median.hover",
-        }
     }
 }

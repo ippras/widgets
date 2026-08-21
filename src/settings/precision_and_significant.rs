@@ -1,4 +1,4 @@
-use crate::r#const::{PERCENT, PRECISION, PREFIX, SIGNIFICANT};
+use crate::r#const::{PRECISION, PREFIX, SIGNIFICANT};
 use const_format::formatcp;
 use egui::{Slider, Ui, Widget};
 use egui_l10n::ContextExt as _;

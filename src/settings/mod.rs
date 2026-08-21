@@ -8,6 +8,7 @@ pub use self::{
 // pub mod option;
 pub mod _threshold;
 pub mod array;
+pub mod array_function;
 pub mod highlight_sort_filter;
 pub mod mean_and_standard_deviation;
 pub mod order;
