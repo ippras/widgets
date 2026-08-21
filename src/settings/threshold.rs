@@ -249,10 +249,10 @@ impl Kind {
     }
 }
 
-/// Operator
+/// Array function
 #[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum Operator {
+pub enum ArrayFunction {
     #[default]
     Max,
     Min,
@@ -260,7 +260,7 @@ pub enum Operator {
     Median,
 }
 
-impl Operator {
+impl ArrayFunction {
     pub const fn text(&self) -> &'static str {
         match self {
             Self::Max => "Max",
