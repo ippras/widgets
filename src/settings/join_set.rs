@@ -3,6 +3,7 @@ use const_format::formatcp;
 use egui::{ComboBox, RichText, Ui};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::{EXCLUDE, INTERSECT, UNITE};
+use std::fmt::Display;
 
 /// Join set
 #[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
@@ -61,5 +62,15 @@ impl JoinSet {
                 .response
                 .on_hover_text(RichText::new(self.icon()).heading());
         });
+    }
+}
+
+impl Display for JoinSet {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Difference => f.write_str(DIFFERENCE),
+            Self::Intersection => f.write_str(INTERSECTION),
+            Self::Union => f.write_str(UNION),
+        }
     }
 }
