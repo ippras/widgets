@@ -21,6 +21,15 @@ Widgets_HighlightSortFilter_Filter = Filter
 Widgets_HighlightSortFilter_Sort = Sort
     .hover = Sort values that meet the condition first, followed by those that do not.
 
+Widgets_JoinType = Join type
+    .hover = Join type by set operation.
+Widgets_JoinType_Intersection = Intersection
+    .hover = Non-zero values are present in all columns.
+Widgets_JoinType_Union = Union
+    .hover = Non-zero values are present in one or more columns.
+Widgets_JoinType_Difference = Difference
+    .hover = Non-zero values are missing in one or more columns.
+
 Widgets_Array = Array
     .hover = Array.
 Widgets_CheckAll = Check all
