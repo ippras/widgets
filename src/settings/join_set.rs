@@ -53,10 +53,14 @@ impl JoinSet {
                 .selected_text(ui.localize(self.text()))
                 .show_ui(ui, |ui| {
                     for join_type in [Self::Intersection, Self::Union, Self::Difference] {
-                        ui.selectable_value(self, join_type, ui.localize(join_type.text()))
-                            .on_hover_ui(|ui| {
-                                ui.label(ui.localize(join_type.hover_text()));
-                            });
+                        ui.selectable_value(
+                            self,
+                            join_type,
+                            (join_type.icon(), ui.localize(join_type.text())),
+                        )
+                        .on_hover_ui(|ui| {
+                            ui.label(ui.localize(join_type.hover_text()));
+                        });
                     }
                 })
                 .response
