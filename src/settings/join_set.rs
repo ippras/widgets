@@ -1,20 +1,20 @@
-use crate::r#const::{DIFFERENCE, INTERSECTION, JOIN_TYPE, PREFIX, UNION};
+use crate::r#const::{DIFFERENCE, INTERSECTION, JOIN_SET, PREFIX, UNION};
 use const_format::formatcp;
 use egui::{ComboBox, RichText, Ui};
 use egui_l10n::ContextExt as _;
 use egui_phosphor::regular::{EXCLUDE, INTERSECT, UNITE};
 
-/// Join type
+/// Join set
 #[derive(Clone, Copy, Debug, Default, Hash, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum JoinType {
+pub enum JoinSet {
     Difference,
     Intersection,
     #[default]
     Union,
 }
 
-impl JoinType {
+impl JoinSet {
     pub fn icon(&self) -> &'static str {
         match self {
             Self::Difference => EXCLUDE,
@@ -25,24 +25,24 @@ impl JoinType {
 
     pub fn text(&self) -> &'static str {
         match self {
-            Self::Difference => formatcp!("{PREFIX}_{JOIN_TYPE}_{DIFFERENCE}"),
-            Self::Intersection => formatcp!("{PREFIX}_{JOIN_TYPE}_{INTERSECTION}"),
-            Self::Union => formatcp!("{PREFIX}_{JOIN_TYPE}_{UNION}"),
+            Self::Difference => formatcp!("{PREFIX}_{JOIN_SET}_{DIFFERENCE}"),
+            Self::Intersection => formatcp!("{PREFIX}_{JOIN_SET}_{INTERSECTION}"),
+            Self::Union => formatcp!("{PREFIX}_{JOIN_SET}_{UNION}"),
         }
     }
 
     pub fn hover_text(&self) -> &'static str {
         match self {
-            Self::Difference => formatcp!("{PREFIX}_{JOIN_TYPE}_{DIFFERENCE}.hover"),
-            Self::Intersection => formatcp!("{PREFIX}_{JOIN_TYPE}_{INTERSECTION}.hover"),
-            Self::Union => formatcp!("{PREFIX}_{JOIN_TYPE}_{UNION}.hover"),
+            Self::Difference => formatcp!("{PREFIX}_{JOIN_SET}_{DIFFERENCE}.hover"),
+            Self::Intersection => formatcp!("{PREFIX}_{JOIN_SET}_{INTERSECTION}.hover"),
+            Self::Union => formatcp!("{PREFIX}_{JOIN_SET}_{UNION}.hover"),
         }
     }
 }
 
-impl JoinType {
+impl JoinSet {
     pub fn show(&mut self, ui: &mut Ui) {
-        const ID: &str = formatcp!("{PREFIX}_{JOIN_TYPE}");
+        const ID: &str = formatcp!("{PREFIX}_{JOIN_SET}");
 
         ui.horizontal(|ui| {
             ui.label(ui.localize(ID)).on_hover_ui(|ui| {

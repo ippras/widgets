@@ -51,7 +51,7 @@ pub const THRESHOLD: &str = "Threshold";
 pub const UNCHECK_ALL: &str = "UncheckAll";
 pub const ZERO: &str = "Zero";
 
-pub const JOIN_TYPE: &str = "JoinType";
+pub const JOIN_SET: &str = "JoinSet";
 pub const DIFFERENCE: &str = "Difference";
 pub const INTERSECTION: &str = "Intersection";
 pub const UNION: &str = "Union";

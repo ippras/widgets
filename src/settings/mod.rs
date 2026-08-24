@@ -10,7 +10,7 @@ pub mod _threshold;
 pub mod array;
 pub mod array_function;
 pub mod highlight_sort_filter;
-pub mod join_type;
+pub mod join_set;
 pub mod mean_and_standard_deviation;
 pub mod order;
 pub mod percent;
