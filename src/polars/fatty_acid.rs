@@ -47,8 +47,8 @@ impl FattyAcidWidget<'_> {
             let mut response = match self.fatty_acid {
                 Some(fatty_acid) => {
                     let mut fatty_acid = fatty_acid.clone();
-                    let button = Button::new(&text)
-                        .min_size(vec2(ui.available_width(), ui.spacing().interact_size.y));
+                    let button = Button::new(&text);
+                        // .min_size(vec2(ui.available_width(), ui.spacing().interact_size.y));
                     MenuButton::from_button(button)
                         .config(
                             MenuConfig::new()
