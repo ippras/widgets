@@ -16,16 +16,16 @@ use typed_builder::TypedBuilder;
 #[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct AutoThreshold {
-    #[builder(default, setter(skip))]
-    pub auto: OrderedFloat<f64>,
-    #[builder(default, setter(skip))]
-    pub manual: Vec<bool>,
+    #[builder(default)]
+    pub value: OrderedFloat<f64>,
     #[builder(default, via_mutators, mutators(
         pub fn bookmark(self, value: f64) {
             self.bookmarks.push(OrderedFloat(value));
         }
     ))]
     pub bookmarks: Vec<OrderedFloat<f64>>,
+    #[builder(default)]
+    pub percent: bool,
 }
 
 impl AutoThreshold {
@@ -33,8 +33,7 @@ impl AutoThreshold {
         Self::builder().build()
     }
 
-    /// Auto threshold
-    fn show(&mut self, ui: &mut egui::Ui, percent: bool) -> egui::Response {
+    pub fn show(&mut self, ui: &mut egui::Ui) -> egui::Response {
         const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}");
 
         ui.horizontal(|ui| {
@@ -44,14 +43,14 @@ impl AutoThreshold {
             let mut response = egui::Slider::new(&mut self.auto.0, 0.0..=1.0)
                 .clamping(egui::SliderClamping::Always)
                 .custom_formatter(|mut value, _| {
-                    if percent {
+                    if self.percent {
                         value *= 100.0;
                     }
                     AnyValue::Float64(value).to_string()
                 })
                 .custom_parser(|value| {
                     let mut parsed = value.parse().ok()?;
-                    if percent {
+                    if self.percent {
                         parsed /= 100.0;
                     }
                     Some(parsed)
@@ -63,7 +62,7 @@ impl AutoThreshold {
                 ui.menu_button(BOOKMARK, |ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
                     for bookmark in &self.bookmarks {
-                        let text = if percent {
+                        let text = if self.percent {
                             format!("{}%", bookmark * 100.0)
                         } else {
                             bookmark.to_string()
