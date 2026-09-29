@@ -13,34 +13,24 @@ use std::iter::zip;
 use typed_builder::TypedBuilder;
 
 /// Auto threshold
-#[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub struct AutoThreshold {
+#[derive(Debug, TypedBuilder)]
+pub struct AutoThreshold<'a> {
+    pub value: &'a mut f64,
     #[builder(default)]
-    pub value: OrderedFloat<f64>,
-    #[builder(default, via_mutators, mutators(
-        pub fn bookmark(self, value: f64) {
-            self.bookmarks.push(OrderedFloat(value));
-        }
-    ))]
-    pub bookmarks: Vec<OrderedFloat<f64>>,
+    pub bookmarks: &'a [f64],
     #[builder(default)]
     pub percent: bool,
 }
 
-impl AutoThreshold {
-    pub fn new() -> Self {
-        Self::builder().build()
-    }
-
+impl AutoThreshold<'_> {
     pub fn show(&mut self, ui: &mut egui::Ui) -> egui::Response {
-        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}");
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}");
 
         ui.horizontal(|ui| {
             ui.label(ui.localize(ID)).on_hover_ui(|ui| {
                 ui.label(ui.localize(formatcp!("{ID}.hover")));
             });
-            let mut response = egui::Slider::new(&mut self.auto.0, 0.0..=1.0)
+            let mut response = egui::Slider::new(self.value, 0.0..=1.0)
                 .clamping(egui::SliderClamping::Always)
                 .custom_formatter(|mut value, _| {
                     if self.percent {
@@ -61,17 +51,14 @@ impl AutoThreshold {
             if !self.bookmarks.is_empty() {
                 ui.menu_button(BOOKMARK, |ui| {
                     ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
-                    for bookmark in &self.bookmarks {
+                    for bookmark in self.bookmarks {
                         let text = if self.percent {
                             format!("{}%", bookmark * 100.0)
                         } else {
                             bookmark.to_string()
                         };
-                        if ui
-                            .selectable_value(&mut self.auto, *bookmark, text)
-                            .changed()
-                        {
-                            self.auto = *bookmark;
+                        if ui.selectable_value(self.value, *bookmark, text).changed() {
+                            *self.value = *bookmark;
                             response.mark_changed();
                         }
                     }
