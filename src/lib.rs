@@ -13,6 +13,7 @@ pub mod l10n {
 pub mod buttons;
 pub mod r#const;
 pub mod settings;
+pub mod widgets;
 
 #[cfg(feature = "polars")]
 pub mod polars;
