@@ -12,6 +12,78 @@ use polars::prelude::*;
 use std::iter::zip;
 use typed_builder::TypedBuilder;
 
+/// Auto threshold
+#[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub struct AutoThreshold {
+    #[builder(default, setter(skip))]
+    pub auto: OrderedFloat<f64>,
+    #[builder(default, setter(skip))]
+    pub manual: Vec<bool>,
+    #[builder(default, via_mutators, mutators(
+        pub fn bookmark(self, value: f64) {
+            self.bookmarks.push(OrderedFloat(value));
+        }
+    ))]
+    pub bookmarks: Vec<OrderedFloat<f64>>,
+}
+
+impl AutoThreshold {
+    pub fn new() -> Self {
+        Self::builder().build()
+    }
+
+    /// Auto threshold
+    fn show(&mut self, ui: &mut egui::Ui, percent: bool) -> egui::Response {
+        const ID: &str = formatcp!("{PREFIX}_{THRESHOLD}_{AUTO}");
+
+        ui.horizontal(|ui| {
+            ui.label(ui.localize(ID)).on_hover_ui(|ui| {
+                ui.label(ui.localize(formatcp!("{ID}.hover")));
+            });
+            let mut response = egui::Slider::new(&mut self.auto.0, 0.0..=1.0)
+                .clamping(egui::SliderClamping::Always)
+                .custom_formatter(|mut value, _| {
+                    if percent {
+                        value *= 100.0;
+                    }
+                    AnyValue::Float64(value).to_string()
+                })
+                .custom_parser(|value| {
+                    let mut parsed = value.parse().ok()?;
+                    if percent {
+                        parsed /= 100.0;
+                    }
+                    Some(parsed)
+                })
+                .logarithmic(true)
+                .update_while_editing(false)
+                .ui(ui);
+            if !self.bookmarks.is_empty() {
+                ui.menu_button(BOOKMARK, |ui| {
+                    ui.style_mut().wrap_mode = Some(TextWrapMode::Extend);
+                    for bookmark in &self.bookmarks {
+                        let text = if percent {
+                            format!("{}%", bookmark * 100.0)
+                        } else {
+                            bookmark.to_string()
+                        };
+                        if ui
+                            .selectable_value(&mut self.auto, *bookmark, text)
+                            .changed()
+                        {
+                            self.auto = *bookmark;
+                            response.mark_changed();
+                        }
+                    }
+                });
+            }
+            response
+        })
+        .inner
+    }
+}
+
 /// Threshold variant
 #[derive(Clone, Debug, Hash, PartialEq, TypedBuilder)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
